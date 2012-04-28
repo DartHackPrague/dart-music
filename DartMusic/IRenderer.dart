@@ -1,0 +1,4 @@
+
+interface IRenderer {
+  void render();
+}
