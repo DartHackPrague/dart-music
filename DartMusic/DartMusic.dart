@@ -6,17 +6,19 @@
 #source('RandomAudioData.dart');
 #source('MP3AudioData.dart');
 #source('CanvasRenderer.dart');
+#source('BgColorAnimator.dart');
+#source('RgbColor.dart');
 
 
 class DartMusic {
 
   // canvas redraw rate
-  static final FPS = 15;
+  static final FPS = 20;
   
   int delay;
   IRenderer renderer;
   IAudioData audioData;
-  
+
   DartMusic(IRenderer rend, IAudioData ad) {
     this.delay = (1000 / FPS).toInt();
     this.renderer = rend;
@@ -42,7 +44,7 @@ class DartMusic {
       reader.on.loadStart.add((Event e) { print("load start"); });
       reader.on.progress.add((Event e) { print("progress"); });
       reader.on.error.add((Event e) { print("error"); });
-      
+
       reader.on.load.add( (Event e) {
         print("file loaded ");
         var audio = document.query("audio");
@@ -50,14 +52,14 @@ class DartMusic {
       });
       for(int i = 0; i < files.length; i++) {
         File file = files.item(i);
-        
+
 //        print("FileReader.DONE="+FileReader.DONE);
 //        print("FileReader.EMPTY="+FileReader.EMPTY);
 //        print("FileReader.LOADING="+FileReader.LOADING);
         print("dragged file: "+file.name);
         reader.readAsDataURL(file);
       }
-      
+
     });
   }
 
@@ -98,10 +100,14 @@ class DartMusic {
 }
 
 void main() {
+  Element body = document.query("body");
+  BgColorAnimator animator = new BgColorAnimator(body);
+  animator.changeBgColor();
+
   //IAudioData audioData = new RandomAudioData();
   IAudioData audioData = new MP3AudioData(document.query("#playMe"));
   IRenderer renderer = new CanvasRenderer(document.query('#drawHere'));
-  
+
   DartMusic m = new DartMusic(renderer, audioData);
   m.run();
   //m.registerAudio();
