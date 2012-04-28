@@ -25,17 +25,28 @@ class CanvasRenderer implements IRenderer {
     int maxLineHeight = (0.3 * this._canvas.height).toInt();
     //int leftPos = ((window.innerWidth - data.length) / 2).toInt();
     int leftPos = 0;
-    double lineWidth = (this._canvas.width / data.length).ceil();
-    this._ctx.strokeStyle = '#eee';
+    double step = this._canvas.width / data.length;
+    int lineWidth = step.ceil().toInt();
+    
+    //this._ctx.strokeStyle = '#eee';
+    
+    CanvasGradient cg = this._ctx.createLinearGradient(0, this._canvas.height - this._bottomOffset - maxLineHeight / 2,
+                                                       0, this._canvas.height - this._bottomOffset + maxLineHeight / 2);
+    cg.addColorStop(0, "#eee");
+    cg.addColorStop(0.5, "#eee");
+    cg.addColorStop(0.5, "rgba(238,238,238,0.9)");
+    cg.addColorStop(0.65, "rgba(238,238,238,0.5)");
+    cg.addColorStop(1, "rgba(238,238,238,0.05)");
+    this._ctx.strokeStyle = cg;
     this._ctx.lineWidth = lineWidth;
 
     int max = (this._canvas.height * this._canvas.height / 12).toInt();
     for (int i=0; i < data.length; i++) {
       int height = (data[i] * data[i]) / max * maxLineHeight;
       this._ctx.moveTo(leftPos, this._canvas.height - this._bottomOffset + height / 2);
-      this._ctx.lineTo(leftPos, this._canvas.height - height / 2 - this._bottomOffset);
+      this._ctx.lineTo(leftPos, this._canvas.height - this._bottomOffset - height / 2);
       
-      leftPos += lineWidth;
+      leftPos += step;
     }
     this._ctx.stroke();
   }
