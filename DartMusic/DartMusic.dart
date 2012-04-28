@@ -27,6 +27,26 @@ class DartMusic {
     window.setInterval(f() => this.update(), this.delay);
   }
 
+
+  void registerDragNDrop() {
+    document.on.drop.add( function( Event event ) {
+
+      event.preventDefault();
+      event.stopPropagation();
+      print("here!");
+      print(event.dataTransfer.getData("Text"));
+      print(event.dataTransfer.getData("URL"));
+      print(event.target.files[0]);
+      print(event.target.files[0].name);
+
+
+      return false;
+    });
+
+  }
+
+
+
   void registerAudio() {
     //getting source from audio tag
     dom.AudioContext audioContext = new dom.AudioContext();
@@ -37,14 +57,14 @@ class DartMusic {
     dom.RealtimeAnalyserNode analyser = audioContext.createAnalyser();
     source.connect(analyser, 0, 0);
 
-    print(analyser.frequencyBinCount);
-
+    /*
     window.setInterval(function() {
       var arr = new Uint8Array(analyser.frequencyBinCount);
       analyser.getByteFrequencyData(arr);
       print(arr[500]);
       print(arr[800]);
     }, 500);
+    */
 
     //connecting inputs and outputs
     //source.connect(volumeNode, 0, 0);
@@ -69,5 +89,5 @@ void main() {
   DartMusic m = new DartMusic(new CanvasRenderer(canvas));
   m.run();
   m.registerAudio();
-
+  m.registerDragNDrop();
 }

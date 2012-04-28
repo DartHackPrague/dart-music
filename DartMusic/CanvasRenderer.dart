@@ -7,7 +7,7 @@ class CanvasRenderer implements IRenderer {
     this.canvas = elm;
   }
   
-  void render() {
+  void render(List data) {
     
   }
   

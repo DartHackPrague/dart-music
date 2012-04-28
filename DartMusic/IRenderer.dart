@@ -1,4 +1,4 @@
 
 interface IRenderer {
-  void render();
+  void render(List data);
 }
