@@ -12,7 +12,7 @@ class DartMusic {
   int fps = 5;
   int delay;
   IRenderer renderer;
-  
+
   DartMusic(IRenderer rend) {
     this.delay = (1000 / this.fps).toInt();
     this.renderer = rend;
@@ -20,9 +20,9 @@ class DartMusic {
 
   void update() {
     print("Hello World!");
-    
+
   }
-  
+
   void run() {
     window.setInterval(f() => this.update(), this.delay);
   }
@@ -32,15 +32,12 @@ class DartMusic {
     document.on.drop.add( function( MouseEvent event ) {
       event.preventDefault();
       event.stopPropagation();
-      print("here!");
       //obtaining file path
       FileList files = event.dataTransfer.files;
-      for(int i = 0; i < files.length; i++) {
-        print(files.item(i).name);
-      }
-//      return false;
-    });
 
+      //we want just one file, ignore the rest of array
+      print(files.item(0).webkitRelativePath + files.item(0).name);
+    });
   }
 
 
