@@ -14,24 +14,37 @@ class DartMusic {
     // the HTML library defines a global "document" variable
     document.query('#status').innerHTML = message;
   }
-  
+
   void registerAudio() {
     //getting source from audio tag
     dom.AudioContext audioContext = new dom.AudioContext();
     var audio = document.query("audio");
     var source = audioContext.createMediaElementSource(audio);
-    dom.AudioGainNode gainNode = audioContext.createGainNode();
+    dom.AudioGainNode volumeNode = audioContext.createGainNode();
+
+    dom.RealtimeAnalyserNode analyser = audioContext.createAnalyser();
+    source.connect(analyser, 0, 0);
+
+    print(analyser.frequencyBinCount);
+
+    window.setInterval(function() {
+      var arr = new Uint8Array(analyser.frequencyBinCount);
+      analyser.getByteFrequencyData(arr);
+      print(arr[500]);
+      print(arr[800]);
+    }, 500);
 
     //connecting inputs and outputs
-    source.connect(gainNode, 0, 0);
-    gainNode.connect(audioContext.destination, 0, 0);
+    //source.connect(volumeNode, 0, 0);
+    analyser.connect(volumeNode, 0, 0);
+    volumeNode.connect(audioContext.destination, 0, 0);
 
     //volume slider handler
     document.query("#volume").on.change.add((e) {
       var volume = Math.parseInt(e.target.value);
       var max = Math.parseInt(e.target.max);
       var fraction = volume / max;
-      gainNode.gain.value = fraction * fraction;
+      volumeNode.gain.value = fraction * fraction;
     });
   }
 }
