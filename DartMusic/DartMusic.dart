@@ -24,7 +24,7 @@ class DartMusic {
   }
   
   void run() {
-    window.setInterval(f() => this.update(), this.delay);
+    //window.setInterval(f() => this.update(), this.delay);
   }
 
 
@@ -36,7 +36,7 @@ class DartMusic {
       //obtaining file path
       FileList files = event.dataTransfer.files;
       for(int i = 0; i < files.length; i++) {
-        print(files.item(i).name);
+        print("dragged file: "+files.item(i).webkitRelativePath);
       }
 //      return false;
     });
