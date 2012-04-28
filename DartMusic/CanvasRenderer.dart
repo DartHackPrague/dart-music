@@ -1,17 +1,16 @@
 
 class CanvasRenderer implements IRenderer {
   
-  static final BOTTOM_OFFSET = 200;
+  //static final BOTTOM_OFFSET = 200;
   
   CanvasElement _canvas;
   CanvasRenderingContext2D _ctx;
+  int _bottomOffset;
   
   CanvasRenderer(CanvasElement elm) {
     this._canvas = elm;
-    this._canvas.width = window.innerWidth;
-    this._canvas.height = window.innerHeight;
-
     this._ctx = this._canvas.getContext("2d");
+    this.resize();
   }
   
   void render(List data) {
@@ -30,15 +29,20 @@ class CanvasRenderer implements IRenderer {
     this._ctx.strokeStyle = '#eee';
     this._ctx.lineWidth = lineWidth;
 
-    int max = 255 * 255;
+    int max = (this._canvas.height * this._canvas.height / 12).toInt();
     for (int i=0; i < data.length; i++) {
       int height = (data[i] * data[i]) / max * maxLineHeight;
-      this._ctx.moveTo(leftPos, this._canvas.height - BOTTOM_OFFSET + height / 2);
-      this._ctx.lineTo(leftPos, this._canvas.height - height / 2 - BOTTOM_OFFSET);
+      this._ctx.moveTo(leftPos, this._canvas.height - this._bottomOffset + height / 2);
+      this._ctx.lineTo(leftPos, this._canvas.height - height / 2 - this._bottomOffset);
       
       leftPos += lineWidth;
     }
     this._ctx.stroke();
   }
   
+  void resize() {
+    this._canvas.width = window.innerWidth;
+    this._canvas.height = window.innerHeight;
+    this._bottomOffset = (this._canvas.height / 3).toInt();
+  }
 }

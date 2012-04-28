@@ -15,20 +15,22 @@ class DartMusic {
   // canvas redraw rate
   static final FPS = 30;
 
-  int delay;
-  IRenderer renderer;
-  IAudioData audioData;
-  List effects;
+  int _delay;
+  IAudioData _audioData;
+  List _effects;
 
-  DartMusic(List effects, IAudioData ad) {
-    this.delay = (1000 / FPS).toInt();
-    this.effects = effects;
-    this.audioData = ad;
+  DartMusic(IAudioData ad) {
+    this._delay = (1000 / FPS).toInt();
+    this._audioData = ad;
+    
+    document.on.resize.add((e) {
+      
+    });
   }
 
   void update() {
-    var data = this.audioData.getData();
-    for (final effect in this.effects) {
+    var data = this._audioData.getData();
+    for (final effect in this._effects) {
       if (effect is IRenderer) {
         effect.render(data);
       }
@@ -36,7 +38,7 @@ class DartMusic {
   }
 
   void run() {
-    window.setInterval(f() => this.update(), this.delay);
+    window.setInterval(f() => this.update(), this._delay);
   }
 
 
@@ -71,6 +73,9 @@ class DartMusic {
     });
   }
 
+  void addEfect(IRenderer effect) {
+    this._effects.add(effect);
+  }
 
   /*
   void registerAudio() {
