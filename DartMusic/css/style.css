@@ -1,0 +1,19 @@
+body {
+ background-color: black;
+ color: white;
+ font-size: 22px;
+ padding: 0px;
+ margin: 0px;
+}
+
+#dndArea {
+ width: 80%;
+ padding: 10px;
+ text-align:center;
+ margin: 6px auto;
+ background-color: darkblue;
+ border: 2px dotted gray;
+ border-radius: 5px;
+ -webkit-border-radius: 5px;
+ -moz-border-radius: 5px;
+}

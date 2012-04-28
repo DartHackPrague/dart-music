@@ -9,18 +9,21 @@
 
 class DartMusic {
 
-  int fps = 5;
+  // canvas redraw rate
+  static final FPS = 1;
+  
   int delay;
   IRenderer renderer;
-
-  DartMusic(IRenderer rend) {
-    this.delay = (1000 / this.fps).toInt();
+  IAudioData audioData;
+  
+  DartMusic(IRenderer rend, IAudioData ad) {
+    this.delay = (1000 / FPS).toInt();
     this.renderer = rend;
+    this.audioData = ad;
   }
 
   void update() {
-    print("Hello World!");
-
+    this.renderer.render(this.audioData.getData());
   }
 
   void run() {
@@ -94,11 +97,10 @@ class DartMusic {
 }
 
 void main() {
-  CanvasElement canvas = document.query('#drawHere');
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-
-  DartMusic m = new DartMusic(new CanvasRenderer(canvas));
+  IAudioData audioData = new RandomAudioData();
+  IRenderer renderer = new CanvasRenderer(document.query('#drawHere'));
+  
+  DartMusic m = new DartMusic(renderer, audioData);
   m.run();
   m.registerAudio();
   m.registerDragNDrop();
