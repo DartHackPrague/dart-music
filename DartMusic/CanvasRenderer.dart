@@ -1,6 +1,8 @@
 
 class CanvasRenderer implements IRenderer {
   
+  static final BOTTOM_OFFSET = 20;
+  
   CanvasElement canvas;
   CanvasRenderingContext2D ctx;
   
@@ -13,21 +15,28 @@ class CanvasRenderer implements IRenderer {
   }
   
   void render(List data) {
-    print('Canvas render');
-    print(data);
+    //print('Canvas render');
+    //print(data.length);
     
     //this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    this.ctx.fillStyle = '#EEE';
-    this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+    //this.ctx.fillStyle = '#eee';
+    //this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    this.canvas.width = this.canvas.width;
     
     int maxLineHeight = (0.3 * this.canvas.height).toInt();
-    int startPosLeft = ((window.innerWidth - maxLineHeight) / 2).toInt();
+    int leftPos = ((window.innerWidth - data.length) / 2).toInt();
     
-    double coef = 100 / 255;
-    for (final value in data) {
-      int height = value * coef * maxLineHeight;
+    for (int i=0; i < data.length; i++) {
+      print(data[i]);
+      int height = data[i] / 255 * maxLineHeight;
+      this.ctx.strokeStyle = '#00f';
+      this.ctx.lineWidth = 1;
+      this.ctx.moveTo(leftPos, this.canvas.height - BOTTOM_OFFSET);
+      this.ctx.lineTo(leftPos, this.canvas.height - height - BOTTOM_OFFSET);
       
+      leftPos++;
     }
+    this.ctx.stroke();
   }
   
 }
