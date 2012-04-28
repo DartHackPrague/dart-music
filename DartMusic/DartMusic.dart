@@ -14,7 +14,7 @@ class DartMusic {
 
   // canvas redraw rate
   static final FPS = 30;
-  
+
   int delay;
   IRenderer renderer;
   IAudioData audioData;
@@ -109,7 +109,8 @@ class DartMusic {
 void main() {
   Element body = document.query("body");
   BgColorAnimator animator = new BgColorAnimator(body);
-  animator.changeBgColor();
+  //animator.changeBgColor();
+  animator.perpetualColorChange();
 
   List effects = new List();
   effects.add(new CanvasRenderer(document.query('#drawHere')));
