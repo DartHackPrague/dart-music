@@ -11,9 +11,6 @@ class RgbColor {
 
   String toString() {
     String value = 'rgb(' +  this.r.toString() + ',' + this.g.toString() + ',' + this.b.toString() + ')';
-
-    print(value);
-
     return value;
   }
 }
