@@ -117,16 +117,11 @@ class DartMusic {
 
 void main() {
   Element body = document.query("body");
-  //BgColorAnimator animator = new BgColorAnimator(body);
+  BgColorAnimator animator = new BgColorAnimator(body);
   //animator.perpetualColorChange();
-  //animator.changeBgColor();
-
-  //List effects = new List();
-  //effects.add(new CanvasRenderer(document.query('#drawHere')));
-  // ... a dalsi
+  animator.changeBgColor();
   
   //IAudioData audioData = new RandomAudioData();
-  //IAudioData audioData = new MP3AudioData(document.query("#playMe"));
   DragDropHandler dragDrop = new DragDropHandler();
   
   

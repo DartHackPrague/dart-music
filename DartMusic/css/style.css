@@ -15,7 +15,7 @@ div#dndArea {
 	 height: 95px;
 	 padding: 10px;
 	 text-align:center;
-	 margin: 10px auto;
+	 margin: 15px auto;
 	 background-color: darkblue;
 	 border: 2px dotted gray;
 	 border-radius: 5px;
@@ -26,12 +26,9 @@ div#dndArea {
 	 position: relative;
 }
 
-div#dndArea > p {
-	
-}
-
 div#dndArea:hover {
 	 opacity: 1.0;
+	 -webkit-animation:pulse 2s infinite linear; 
 }
 
 canvas#drawHere {
@@ -45,4 +42,10 @@ canvas#drawHere {
 	position: absolute;
 	top: 150px; /* below the dnd area */
 	z-index: 100;
+}
+
+@-webkit-keyframes pulse {
+    from { box-shadow:0 0 1px #A2D5DF; }
+    10%  { box-shadow:0 0 35px #0A70FF; }
+    to   { box-shadow:0 0 1px #A2D5DF; }
 }
