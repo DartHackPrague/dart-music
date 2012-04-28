@@ -8,6 +8,7 @@
 #source('CanvasRenderer.dart');
 #source('BgColorAnimator.dart');
 #source('RgbColor.dart');
+#source('DragDropHandler.dart');
 
 
 class DartMusic {
@@ -55,17 +56,16 @@ class DartMusic {
 
       reader.on.load.add( (Event e) {
         print("file loaded ");
-        //var audio = document.query("audio");
+        AudioElement audioOld = document.query("audio");
+        
         AudioElement audio = new AudioElement();
         audio.src = e.target.result;
-        document.body.nodes.add(audio);
+        audio.controls = true;
+        audioOld.replaceWith(audio);
+        //document.body.nodes.add(audio);
       });
       for(int i = 0; i < files.length; i++) {
         File file = files.item(i);
-
-//        print("FileReader.DONE="+FileReader.DONE);
-//        print("FileReader.EMPTY="+FileReader.EMPTY);
-//        print("FileReader.LOADING="+FileReader.LOADING);
         print("dragged file: "+file.name);
         reader.readAsDataURL(file);
       }
@@ -123,9 +123,13 @@ void main() {
   
   //IAudioData audioData = new RandomAudioData();
   IAudioData audioData = new MP3AudioData(document.query("#playMe"));
-
+  DragDropHandler dragDrop = new DragDropHandler();
+  
+  
   DartMusic m = new DartMusic(effects, audioData);
   m.run();
+  dragDrop.register();
+  
   //m.registerAudio();
-  m.registerDragNDrop();
+  //m.registerDragNDrop();
 }
