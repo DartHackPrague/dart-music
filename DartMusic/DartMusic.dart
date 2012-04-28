@@ -17,18 +17,16 @@ class DartMusic {
 
 
   void registerDragNDrop() {
-    document.on.drop.add( function( Event event ) {
-
+    document.on.drop.add( function( MouseEvent event ) {
       event.preventDefault();
       event.stopPropagation();
       print("here!");
-      print(event.dataTransfer.getData("Text"));
-      print(event.dataTransfer.getData("URL"));
-      print(event.target.files[0]);
-      print(event.target.files[0].name);
-
-
-      return false;
+      //obtaining file path
+      FileList files = event.dataTransfer.files;
+      for(int i = 0; i < files.length; i++) {
+        print(files.item(i).name);
+      }
+//      return false;
     });
 
   }
