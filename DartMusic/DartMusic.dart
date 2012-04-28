@@ -43,7 +43,7 @@ class DartMusic {
       reader.on.error.add((Event e) { print("error"); });
       
       reader.on.load.add( (Event e) {
-        print("file loaded "+e.target.result);
+        print("file loaded ");
         var audio = document.query("audio");
         audio.src = e.target.result;
       });
