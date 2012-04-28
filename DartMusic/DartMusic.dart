@@ -28,7 +28,7 @@ class DartMusic {
       for (final effect in this._effects) {
         effect.resize();
       }
-    }, true);
+    });
   }
 
   void update() {
@@ -80,39 +80,7 @@ class DartMusic {
   void setAudioSource(IAudioData audio) {
     this._audioData = audio;
   }
-
-  /*
-  void registerAudio() {
-    //getting source from audio tag
-    dom.AudioContext audioContext = new dom.AudioContext();
-    var audio = document.query("audio");
-    var source = audioContext.createMediaElementSource(audio);
-    dom.AudioGainNode volumeNode = audioContext.createGainNode();
-
-    dom.RealtimeAnalyserNode analyser = audioContext.createAnalyser();
-    source.connect(analyser, 0, 0);
-
-    
-    //window.setInterval(function() {
-    //  var arr = new Uint8Array(analyser.frequencyBinCount);
-    //  analyser.getByteFrequencyData(arr);
-    //  print(arr[500]);
-    //  print(arr[800]);
-    //}, 500);
-
-    //connecting inputs and outputs
-    //source.connect(volumeNode, 0, 0);
-    analyser.connect(volumeNode, 0, 0);
-    volumeNode.connect(audioContext.destination, 0, 0);
-
-    //volume slider handler
-    document.query("#volume").on.change.add((e) {
-      var volume = Math.parseInt(e.target.value);
-      var max = Math.parseInt(e.target.max);
-      var fraction = volume / max;
-      volumeNode.gain.value = fraction * fraction;
-    });
-  }*/
+  
 }
 
 void main() {
