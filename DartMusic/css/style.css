@@ -6,12 +6,16 @@ body {
 	 margin: 0px;
 }
 
-#dndArea {
-	 width: 97%;
-	 height: 100px;
+div#main {
+	position: relative;
+}
+
+div#dndArea {
+	 width: 95%;
+	 height: 95px;
 	 padding: 10px;
 	 text-align:center;
-	 margin: 6px auto;
+	 margin: 10px auto;
 	 background-color: darkblue;
 	 border: 2px dotted gray;
 	 border-radius: 5px;
@@ -19,11 +23,14 @@ body {
 	 -moz-border-radius: 5px;
 	 opacity: 0.4;
 	 z-index: 100;
-	 position: absolute;
-	 top: 10px;
+	 position: relative;
 }
 
-#dndArea:hover {
+div#dndArea > p {
+	
+}
+
+div#dndArea:hover {
 	 opacity: 1.0;
 }
 

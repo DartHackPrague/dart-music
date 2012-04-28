@@ -20,21 +20,21 @@ class DartMusic {
   IAudioData _audioData;
   List _effects;
 
-  DartMusic(IAudioData ad) {
+  DartMusic() {
     this._delay = (1000 / FPS).toInt();
-    this._audioData = ad;
+    this._effects = new List();
     
-    document.on.resize.add((e) {
-      
-    });
+    window.on.resize.add((Event e) {
+      for (final effect in this._effects) {
+        effect.resize();
+      }
+    }, true);
   }
 
   void update() {
     var data = this._audioData.getData();
     for (final effect in this._effects) {
-      if (effect is IRenderer) {
-        effect.render(data);
-      }
+      effect.render(data);
     }
   }
 
@@ -73,8 +73,12 @@ class DartMusic {
     });
   }
 
-  void addEfect(IRenderer effect) {
+  void addEffect(IRenderer effect) {
     this._effects.add(effect);
+  }
+  
+  void setAudioSource(IAudioData audio) {
+    this._audioData = audio;
   }
 
   /*
@@ -113,20 +117,22 @@ class DartMusic {
 
 void main() {
   Element body = document.query("body");
-  BgColorAnimator animator = new BgColorAnimator(body);
+  //BgColorAnimator animator = new BgColorAnimator(body);
+  //animator.perpetualColorChange();
   //animator.changeBgColor();
-  animator.perpetualColorChange();
 
-  List effects = new List();
-  effects.add(new CanvasRenderer(document.query('#drawHere')));
+  //List effects = new List();
+  //effects.add(new CanvasRenderer(document.query('#drawHere')));
   // ... a dalsi
   
   //IAudioData audioData = new RandomAudioData();
-  IAudioData audioData = new MP3AudioData(document.query("#playMe"));
+  //IAudioData audioData = new MP3AudioData(document.query("#playMe"));
   DragDropHandler dragDrop = new DragDropHandler();
   
   
-  DartMusic m = new DartMusic(effects, audioData);
+  DartMusic m = new DartMusic();
+  m.addEffect(new CanvasRenderer(document.query('#drawHere')));
+  m.setAudioSource(new MP3AudioData(document.query("#playMe")));
   m.run();
   dragDrop.register();
   

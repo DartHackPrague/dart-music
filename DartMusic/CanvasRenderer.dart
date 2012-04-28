@@ -25,7 +25,8 @@ class CanvasRenderer implements IRenderer {
     int maxLineHeight = (0.3 * this._canvas.height).toInt();
     //int leftPos = ((window.innerWidth - data.length) / 2).toInt();
     int leftPos = 0;
-    double lineWidth = (this._canvas.width / data.length).ceil();
+    double step = this._canvas.width / data.length;
+    int lineWidth = step.ceil().toInt();
     this._ctx.strokeStyle = '#eee';
     this._ctx.lineWidth = lineWidth;
 
@@ -35,7 +36,7 @@ class CanvasRenderer implements IRenderer {
       this._ctx.moveTo(leftPos, this._canvas.height - this._bottomOffset + height / 2);
       this._ctx.lineTo(leftPos, this._canvas.height - height / 2 - this._bottomOffset);
       
-      leftPos += lineWidth;
+      leftPos += step;
     }
     this._ctx.stroke();
   }
