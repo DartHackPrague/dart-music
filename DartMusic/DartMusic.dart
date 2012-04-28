@@ -13,7 +13,7 @@
 class DartMusic {
 
   // canvas redraw rate
-  static final FPS = 20;
+  static final FPS = 30;
   
   int delay;
   IRenderer renderer;
