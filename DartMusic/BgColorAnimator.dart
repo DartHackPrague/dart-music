@@ -5,6 +5,7 @@ class BgColorAnimator {
   Element element;
   RgbColor color;
   int maxColorValue = 255;
+  int minColorValue = 0;
 
   BgColorAnimator(Element element) {
     this.element = element;
@@ -25,10 +26,31 @@ class BgColorAnimator {
     return randomColor;
   }
 
+
   RgbColor getNextColor(RgbColor currentColor) {
-    if (currentColor.r < maxColorValue) {
-      currentColor.r++;
+    if (currentColor.r < maxColorValue || currentColor.g < maxColorValue || currentColor.b < maxColorValue) {
+      if (currentColor.r < maxColorValue) {
+        currentColor.r++;
+      }
+      else if (currentColor.g < maxColorValue) {
+        currentColor.g++;
+      }
+      else if (currentColor.b < maxColorValue) {
+        currentColor.b++;
+      }
     }
+    else {
+      if (currentColor.r > minColorValue) {
+        currentColor.r--;
+      }
+      else if (currentColor.g > minColorValue) {
+        currentColor.g--;
+      }
+      else if (currentColor.b > minColorValue) {
+        currentColor.b--;
+      }
+    }
+
 
     return currentColor;
   }
@@ -39,7 +61,7 @@ class BgColorAnimator {
 
     changeBgColor();
 
-    window.setTimeout(perpetualColorChange, 250);
+    window.setTimeout(perpetualColorChange, 15);
 
   }
 }
