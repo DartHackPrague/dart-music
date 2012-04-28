@@ -18,15 +18,21 @@ class DartMusic {
   int delay;
   IRenderer renderer;
   IAudioData audioData;
+  List effects;
 
-  DartMusic(IRenderer rend, IAudioData ad) {
+  DartMusic(List effects, IAudioData ad) {
     this.delay = (1000 / FPS).toInt();
-    this.renderer = rend;
+    this.effects = effects;
     this.audioData = ad;
   }
 
   void update() {
-    this.renderer.render(this.audioData.getData());
+    var data = this.audioData.getData();
+    for (final effect in this.effects) {
+      if (effect is IRenderer) {
+        effect.render(data);
+      }
+    }
   }
 
   void run() {
@@ -47,8 +53,10 @@ class DartMusic {
 
       reader.on.load.add( (Event e) {
         print("file loaded ");
-        var audio = document.query("audio");
+        //var audio = document.query("audio");
+        AudioElement audio = new AudioElement();
         audio.src = e.target.result;
+        document.body.nodes.add(audio);
       });
       for(int i = 0; i < files.length; i++) {
         File file = files.item(i);
@@ -64,7 +72,7 @@ class DartMusic {
   }
 
 
-
+  /*
   void registerAudio() {
     //getting source from audio tag
     dom.AudioContext audioContext = new dom.AudioContext();
@@ -75,14 +83,13 @@ class DartMusic {
     dom.RealtimeAnalyserNode analyser = audioContext.createAnalyser();
     source.connect(analyser, 0, 0);
 
-    /*
-    window.setInterval(function() {
-      var arr = new Uint8Array(analyser.frequencyBinCount);
-      analyser.getByteFrequencyData(arr);
-      print(arr[500]);
-      print(arr[800]);
-    }, 500);
-    */
+    
+    //window.setInterval(function() {
+    //  var arr = new Uint8Array(analyser.frequencyBinCount);
+    //  analyser.getByteFrequencyData(arr);
+    //  print(arr[500]);
+    //  print(arr[800]);
+    //}, 500);
 
     //connecting inputs and outputs
     //source.connect(volumeNode, 0, 0);
@@ -96,7 +103,7 @@ class DartMusic {
       var fraction = volume / max;
       volumeNode.gain.value = fraction * fraction;
     });
-  }
+  }*/
 }
 
 void main() {
@@ -105,11 +112,14 @@ void main() {
   //animator.changeBgColor();
   animator.perpetualColorChange();
 
+  List effects = new List();
+  effects.add(new CanvasRenderer(document.query('#drawHere')));
+  // ... a dalsi
+  
   //IAudioData audioData = new RandomAudioData();
   IAudioData audioData = new MP3AudioData(document.query("#playMe"));
-  IRenderer renderer = new CanvasRenderer(document.query('#drawHere'));
 
-  DartMusic m = new DartMusic(renderer, audioData);
+  DartMusic m = new DartMusic(effects, audioData);
   m.run();
   //m.registerAudio();
   m.registerDragNDrop();

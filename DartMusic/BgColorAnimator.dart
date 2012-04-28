@@ -8,7 +8,7 @@ class BgColorAnimator {
 
   BgColorAnimator(Element element) {
     this.element = element;
-    this.color = new RgbColor(10, 90, 40);
+    this.color = new RgbColor(200, 90, 40);
   }
 
   void changeBgColor() {
