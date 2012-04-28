@@ -44,7 +44,7 @@ class DartMusic {
       reader.on.error.add((Event e) { print("error"); });
       
       reader.on.load.add( (Event e) {
-        print("file loaded "+e.target.result);
+        print("file loaded ");
         var audio = document.query("audio");
         audio.src = e.target.result;
       });
@@ -99,7 +99,7 @@ class DartMusic {
 
 void main() {
   //IAudioData audioData = new RandomAudioData();
-  IAudioData audioData = new MP3AudioData(document.query("audio"));
+  IAudioData audioData = new MP3AudioData(document.query("#playMe"));
   IRenderer renderer = new CanvasRenderer(document.query('#drawHere'));
   
   DartMusic m = new DartMusic(renderer, audioData);
