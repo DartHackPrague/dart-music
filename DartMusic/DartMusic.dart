@@ -53,8 +53,10 @@ class DartMusic {
 
       reader.on.load.add( (Event e) {
         print("file loaded ");
-        var audio = document.query("audio");
+        //var audio = document.query("audio");
+        AudioElement audio = new AudioElement();
         audio.src = e.target.result;
+        document.body.nodes.add(audio);
       });
       for(int i = 0; i < files.length; i++) {
         File file = files.item(i);
