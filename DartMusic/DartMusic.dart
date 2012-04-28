@@ -2,8 +2,9 @@
 #import('dart:dom', prefix:'dom');
 
 #source('IAudioData.dart');
-#source('RandomAudioData.dart');
 #source('IRenderer.dart');
+#source('RandomAudioData.dart');
+#source('MP3AudioData.dart');
 #source('CanvasRenderer.dart');
 #source('BgColorAnimator.dart');
 #source('RgbColor.dart');
@@ -45,7 +46,7 @@ class DartMusic {
       reader.on.error.add((Event e) { print("error"); });
 
       reader.on.load.add( (Event e) {
-        print("file loaded "+e.target.result);
+        print("file loaded ");
         var audio = document.query("audio");
         audio.src = e.target.result;
       });
@@ -109,6 +110,6 @@ void main() {
 
   DartMusic m = new DartMusic(renderer, audioData);
   m.run();
-  m.registerAudio();
+  //m.registerAudio();
   m.registerDragNDrop();
 }
