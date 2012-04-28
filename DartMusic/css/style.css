@@ -37,4 +37,5 @@ canvas#drawHere {
 .controls {
 	position: absolute;
 	top: 150px; /* below the dnd area */
+	z-index: 100;
 }
