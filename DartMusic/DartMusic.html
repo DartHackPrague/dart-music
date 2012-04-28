@@ -3,15 +3,28 @@
 <html>
   <head>
     <title>DartMusic</title>
+    <link href="css/style.css" rel="stylesheet" media="screen"/>
   </head>
   <body>
+  	<div id="dndArea">
+  		Drop your mp3 file here!
+  		<br/>
+  		You will see some dark magic
+  	</div>
+    
+
+	<div class="controls">
+	    <audio controls="controls">
+	    	<source src="music/test.mp3" type="audio/mpeg" />
+	  		Your browser does not support the audio element.
+	    </audio>
+	    <label for="volume">Volume: <input type="range" min="0" max="100" id="volume" value="100"></label>    
+    </div>
+    
     <canvas id="drawHere"></canvas>
+    
     <script type="application/dart" src="DartMusic.dart"></script>
     <script src="http://dart.googlecode.com/svn/branches/bleeding_edge/dart/client/dart.js"></script>
-    <audio controls="controls">
-    	<source src="music/test.mp3" type="audio/mpeg" />
-  		Your browser does not support the audio element.
-    </audio>
-    <label for="volume">Volume: <input type="range" min="0" max="100" id="volume" value="100"></label>    
+
   </body>
 </html>
