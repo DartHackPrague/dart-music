@@ -28,7 +28,7 @@ class DartMusic {
   }
 
   void run() {
-    window.setInterval(f() => this.update(), this.delay);
+    //window.setInterval(f() => this.update(), this.delay);
   }
 
 
@@ -38,9 +38,26 @@ class DartMusic {
       event.stopPropagation();
       //obtaining file path
       FileList files = event.dataTransfer.files;
-
-      //we want just one file, ignore the rest of array
-      print(files.item(0).webkitRelativePath + files.item(0).name);
+      FileReader reader = new FileReader();
+      reader.on.loadStart.add((Event e) { print("load start"); });
+      reader.on.progress.add((Event e) { print("progress"); });
+      reader.on.error.add((Event e) { print("error"); });
+      
+      reader.on.load.add( (Event e) {
+        print("file loaded "+e.target.result);
+        var audio = document.query("audio");
+        audio.src = e.target.result;
+      });
+      for(int i = 0; i < files.length; i++) {
+        File file = files.item(i);
+        
+//        print("FileReader.DONE="+FileReader.DONE);
+//        print("FileReader.EMPTY="+FileReader.EMPTY);
+//        print("FileReader.LOADING="+FileReader.LOADING);
+        print("dragged file: "+file.name);
+        reader.readAsDataURL(file);
+      }
+      
     });
   }
 
