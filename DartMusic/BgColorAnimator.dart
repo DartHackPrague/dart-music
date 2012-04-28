@@ -6,6 +6,8 @@ class BgColorAnimator {
   RgbColor color;
   int maxColorValue = 255;
   int minColorValue = 0;
+  bool minReached = false;
+  bool maxReached = false;
 
   BgColorAnimator(Element element) {
     this.element = element;
@@ -28,7 +30,7 @@ class BgColorAnimator {
 
 
   RgbColor getNextColor(RgbColor currentColor) {
-    if (currentColor.r < maxColorValue || currentColor.g < maxColorValue || currentColor.b < maxColorValue) {
+    if (maxReached == false && (currentColor.r <= maxColorValue || currentColor.g <= maxColorValue || currentColor.b <= maxColorValue)) {
       if (currentColor.r < maxColorValue) {
         currentColor.r++;
       }
@@ -38,16 +40,24 @@ class BgColorAnimator {
       else if (currentColor.b < maxColorValue) {
         currentColor.b++;
       }
+      else {
+        maxReached = true;
+        minReached = false;
+      }
     }
-    else {
-      if (currentColor.r > minColorValue) {
+    else if (maxReached == true) {
+      if (currentColor.r > minColorValue && currentColor.r <= maxColorValue) {
         currentColor.r--;
       }
-      else if (currentColor.g > minColorValue) {
+      else if (currentColor.g > minColorValue && currentColor.g <= maxColorValue) {
         currentColor.g--;
       }
-      else if (currentColor.b > minColorValue) {
+      else if (currentColor.b > minColorValue && currentColor.b <= maxColorValue) {
         currentColor.b--;
+      }
+      else {
+        maxReached = false;
+        minReached = true;
       }
     }
 
