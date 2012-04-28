@@ -1,18 +1,30 @@
 #import('dart:html');
 #import('dart:dom', prefix:'dom');
 
+#source('IAudioData.dart');
+#source('RandomAudioData.dart');
+#source('IRenderer.dart');
+#source('CanvasRenderer.dart');
+
+
 class DartMusic {
 
-  DartMusic() {
+  int fps = 5;
+  int delay;
+  IRenderer renderer;
+  
+  DartMusic(IRenderer rend) {
+    this.delay = (1000 / this.fps).toInt();
+    this.renderer = rend;
   }
 
+  void update() {
+    print("Hello World!");
+    
+  }
+  
   void run() {
-    write("Hello World!");
-  }
-
-  void write(String message) {
-    // the HTML library defines a global "document" variable
-    document.query('#status').innerHTML = message;
+    window.setInterval(f() => this.update(), this.delay);
   }
 
 
@@ -68,9 +80,12 @@ class DartMusic {
 }
 
 void main() {
-  DartMusic m = new DartMusic();
+  CanvasElement canvas = document.query('#drawHere');
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  DartMusic m = new DartMusic(new CanvasRenderer(canvas));
   m.run();
   m.registerAudio();
-
   m.registerDragNDrop();
 }
