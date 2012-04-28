@@ -31,10 +31,11 @@ canvas#drawHere {
 	position: absolute;
 	top: 0px;
 	left: 0px;
-	 z-index: 1;
+	z-index: 1;  
 }
 
 .controls {
 	position: absolute;
 	top: 150px; /* below the dnd area */
+	z-index: 100;
 }

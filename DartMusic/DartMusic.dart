@@ -2,8 +2,9 @@
 #import('dart:dom', prefix:'dom');
 
 #source('IAudioData.dart');
-#source('RandomAudioData.dart');
 #source('IRenderer.dart');
+#source('RandomAudioData.dart');
+#source('MP3AudioData.dart');
 #source('CanvasRenderer.dart');
 
 
@@ -97,11 +98,12 @@ class DartMusic {
 }
 
 void main() {
-  IAudioData audioData = new RandomAudioData();
+  //IAudioData audioData = new RandomAudioData();
+  IAudioData audioData = new MP3AudioData(document.query("audio"));
   IRenderer renderer = new CanvasRenderer(document.query('#drawHere'));
   
   DartMusic m = new DartMusic(renderer, audioData);
   m.run();
-  m.registerAudio();
+  //m.registerAudio();
   m.registerDragNDrop();
 }
