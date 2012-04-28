@@ -27,7 +27,7 @@ class CanvasRenderer implements IRenderer {
     int leftPos = ((window.innerWidth - data.length) / 2).toInt();
     
     for (int i=0; i < data.length; i++) {
-      print(data[i]);
+      //print(data[i]);
       int height = data[i] / 255 * maxLineHeight;
       this.ctx.strokeStyle = '#00f';
       this.ctx.lineWidth = 1;

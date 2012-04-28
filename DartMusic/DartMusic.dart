@@ -11,7 +11,7 @@
 class DartMusic {
 
   // canvas redraw rate
-  static final FPS = 1;
+  static final FPS = 10;
   
   int delay;
   IRenderer renderer;
@@ -28,7 +28,7 @@ class DartMusic {
   }
 
   void run() {
-    //window.setInterval(f() => this.update(), this.delay);
+    window.setInterval(f() => this.update(), this.delay);
   }
 
 
