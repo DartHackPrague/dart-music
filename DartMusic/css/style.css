@@ -62,7 +62,7 @@ canvas#drawCirclesHere {
 }
 
 
-@media only screen and (min-height: 400px) {
+@media only screen and (min-height: 450px) {
 	div#dndArea p {
 		font-size: 22px;
 		margin-bottom: 22px;
