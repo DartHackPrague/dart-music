@@ -18,15 +18,10 @@
 
 class DartMusic {
 
-  // canvas redraw rate
-  static final FPS = 30;
-
-  int _delay;
   IAudioData _audioData;
   List _effects;
 
   DartMusic() {
-    this._delay = (1000 / FPS).toInt();
     this._effects = new List();
 
     window.on.resize.add((Event e) {
@@ -36,15 +31,16 @@ class DartMusic {
     });
   }
 
-  void update() {
+  void update(int time) {
     var data = this._audioData.getData();
     for (final effect in this._effects) {
-      effect.render(data);
+      effect.render(data, time);
     }
+    window.webkitRequestAnimationFrame(this.update);
   }
 
   void run() {
-    window.setInterval(f() => this.update(), this._delay);
+    window.webkitRequestAnimationFrame(this.update);
   }
 
   void addEffect(IRenderer effect) {
@@ -53,6 +49,9 @@ class DartMusic {
 
   void setAudioSource(IAudioData audio) {
     this._audioData = audio;
+    for (final effect in this._effects) {
+      effect.setAudioElement(audio.getElement());
+    }
   }
 
 }
@@ -69,7 +68,8 @@ void main() {
   m.addEffect(new CanvasRenderer(document.query('#drawHere'), document.query("#playMe")));
   m.addEffect(new CanvasCircleRenderer(document.query('#drawCirclesHere')));
   m.setAudioSource(new MP3AudioData(document.query("#playMe")));
-  m.run();
+  window.setTimeout(f() => m.run(), 50);
+  
   dragDrop.register();
 
 }

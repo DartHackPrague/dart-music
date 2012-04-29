@@ -19,7 +19,7 @@ class CanvasCircleRenderer implements IRenderer {
     this.circles = _createCircles();
   }
 
-  void render(List data) {
+  void render(List data, int time) {
     // clear canvas
     this._canvas.width = this._canvas.width;
 
@@ -87,4 +87,10 @@ class CanvasCircleRenderer implements IRenderer {
     return color;
   }
 
+  /**
+   * required by the interface definition
+   */
+  void setAudioElement(AudioElement audio) {  }
+
+  
 }
