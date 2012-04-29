@@ -1,7 +1,6 @@
 class CanvasCircle {
   var position;
   var color;
-  var opacity;
   var size;
   var oldSize;
   var minX = 0;
@@ -13,12 +12,16 @@ class CanvasCircle {
 
   int stepUp = 2;
   int stepAside = 3;
+  double opacity = 0.6;
 
 
   CanvasCircle(Position position, RgbColor color, int maxX, int maxY) {
     this.position = position;
+
+    color.opacity = this.opacity;
     this.color = color;
-    this.opacity = 1;
+
+    this.opacity = 0.7;
     this.size = DartMath.Random(minSize, maxSize);
     this.oldSize = this.size;
     this.maxX = maxX;
