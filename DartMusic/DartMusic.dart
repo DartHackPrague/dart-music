@@ -10,6 +10,10 @@
 #source('RgbColor.dart');
 #source('DragDropHandler.dart');
 
+#source('CanvasCircleRenderer.dart');
+#source('CanvasCircle.dart');
+#source('Position.dart');
+
 
 class DartMusic {
 
@@ -62,6 +66,7 @@ void main() {
 
   DartMusic m = new DartMusic();
   m.addEffect(new CanvasRenderer(document.query('#drawHere'), document.query("#playMe")));
+  m.addEffect(new CanvasCircleRenderer(document.query('#drawCirclesHere')));
   m.setAudioSource(new MP3AudioData(document.query("#playMe")));
   m.run();
   dragDrop.register();
