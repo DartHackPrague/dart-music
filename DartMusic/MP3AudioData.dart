@@ -8,11 +8,13 @@ class MP3AudioData implements IAudioData {
   int _freqMin = 0;
   int _freqMax = 20000;
   int freqMaxTotal = 20000;
+  dom.AudioContext audioContext;
+  var source;
   
-  MP3AudioData(audio) {
+  MP3AudioData(AudioElement audio) {
     this._elm = audio;
-    dom.AudioContext audioContext = new dom.AudioContext();
-    var source = audioContext.createMediaElementSource(audio);
+    audioContext = new dom.AudioContext();
+    source = audioContext.createMediaElementSource(audio);
     dom.AudioGainNode volumeNode = audioContext.createGainNode();
     this._analyser = audioContext.createAnalyser();
 
@@ -30,6 +32,12 @@ class MP3AudioData implements IAudioData {
     this._analyser.connect(audioContext.destination, 0, 0);
   }
   
+  void updateSource(AudioElement audio) {
+    this._elm = audio;
+    var newSource = audioContext.createMediaElementSource(audio);
+    source.disconnect(0);
+    newSource.connect(_lowpassFilter, 0, 0);
+  }
   
   List getData() {
     var arr = new Uint8Array(_analyser.frequencyBinCount);

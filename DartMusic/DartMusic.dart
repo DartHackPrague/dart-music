@@ -54,6 +54,10 @@ class DartMusic {
       effect.setAudioElement(audio.getElement());
     }
   }
+  
+  IAudioData getAudioData() {
+    return _audioData;
+  }
 
 }
 
