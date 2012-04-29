@@ -71,10 +71,10 @@ class CanvasRenderer implements IRenderer {
     
     // maximum height that any line in the analyzer can have 
 
-    int maxLineHeight = (0.4 * this._canvas.height).toInt();
-    if (maxLineHeight * 2 > this._canvas.height * 0.8) {
+    int maxLineHeight = (0.5 * this._canvas.height).toInt();
+    /*if (maxLineHeight * 2 > this._canvas.height * 0.8) {
       maxLineHeight = (this._canvas.height / 3).toInt();
-    }
+    }*/
     
     int leftPos = 0;
     // step size for x axus
@@ -88,7 +88,7 @@ class CanvasRenderer implements IRenderer {
      * "mirror like" reflection
      */
     this._ctx.beginPath();
-    this._ctx.strokeStyle = "rgba(255,255,255,0.2)";
+    this._ctx.strokeStyle = "rgba(150,150,150,0.2)";
     this._ctx.lineWidth = 1;
     this._ctx.moveTo(0, basePosition);
     this._ctx.lineTo(this._canvas.width, basePosition);
@@ -99,7 +99,7 @@ class CanvasRenderer implements IRenderer {
      * "mirror like" reflection
      */
     cg = this._ctx.createLinearGradient(0, this._canvas.height - this._bottomOffset - maxLineHeight / 2,
-                                                       0, this._canvas.height - this._bottomOffset + maxLineHeight / 2);
+                                        0, this._canvas.height - this._bottomOffset + maxLineHeight / 2);
     cg.addColorStop(0, "#000");
     cg.addColorStop(0.5, "#000");
     cg.addColorStop(0.5, "rgba(50,50,50,0.9)");
@@ -111,9 +111,10 @@ class CanvasRenderer implements IRenderer {
     this._ctx.lineWidth = lineWidth;
 
     // power of 2 - just to make bigger differences between low and high values (looks better)
-    int max = (this._canvas.height * this._canvas.height / 12).toInt();
+    //int max = (this._canvas.height * this._canvas.height / 6).toInt();
+    int max = 255 * 255;
     for (int i=0; i < data.length; i++) {
-      int height = (data[i] * data[i]) / max * maxLineHeight;
+      int height = ((data[i] * data[i]) / max) * maxLineHeight;
       this._ctx.moveTo(leftPos, basePosition + height / 2);
       this._ctx.lineTo(leftPos, basePosition - height / 2);
 
@@ -129,7 +130,7 @@ class CanvasRenderer implements IRenderer {
     this._ctx.stroke();
 
     /**
-     * draw "progress bar"
+     * draw slider
      */
     this._ctx.beginPath();
     leftPos = ((this._audio.currentTime / this._audio.duration) * this._canvas.width).round().toInt();
@@ -137,14 +138,14 @@ class CanvasRenderer implements IRenderer {
     if (height < 100) {
       height = 100;
     }
-    // copy mirror like reflection from above
+    // copy slider mirror like reflection from above
     cg = this._ctx.createLinearGradient(0, basePosition - maxLineHeight,
                                         0, basePosition + maxLineHeight);
-    cg.addColorStop(0, "#bbb");
-    cg.addColorStop(0.5, "#bbb");
-    cg.addColorStop(0.5, "rgba(210,210,210,0.6)");
-    cg.addColorStop(0.65, "rgba(210,210,210,0.3)");
-    cg.addColorStop(1, "rgba(210,210,210,0.05)");
+    cg.addColorStop(0, "#999");
+    cg.addColorStop(0.5, "#999");
+    cg.addColorStop(0.5, "rgba(160,160,160,0.6)");
+    cg.addColorStop(0.65, "rgba(160,160,160,0.3)");
+    cg.addColorStop(1, "rgba(160,160,160,0.05)");
     this._ctx.strokeStyle = cg;
     this._ctx.lineWidth = 2;
     // line
@@ -161,10 +162,10 @@ class CanvasRenderer implements IRenderer {
     
     cg = this._ctx.createLinearGradient(0, basePosition - maxLineHeight * 0.8,
                                         0, basePosition + maxLineHeight * 0.8);
-    cg.addColorStop(0, "rgba(255,255,255,0.1)");
-    cg.addColorStop(0.2, "rgba(255,255,255,0.25)");
-    cg.addColorStop(0.8, "rgba(255,255,255,0.25)");
-    cg.addColorStop(1, "rgba(255,255,255,0.1)");
+    cg.addColorStop(0, "rgba(255,210,23,0.05)");
+    cg.addColorStop(0.2, "rgba(255,210,23,0.25)");
+    cg.addColorStop(0.8, "rgba(255,210,23,0.25)");
+    cg.addColorStop(1, "rgba(255,210,23,0.05)");
     
     this._ctx.fillStyle = cg;
 
@@ -175,9 +176,12 @@ class CanvasRenderer implements IRenderer {
       this._ctx.beginPath();
       int rectWidth = (this._drawDragDropSelectionEnd - this._drawDragDropSelectionBegin).abs();
       int rectX = this._drawDragDropSelectionEnd < this._drawDragDropSelectionBegin ? this._drawDragDropSelectionEnd : this._drawDragDropSelectionBegin;
-      int rectY = basePosition - maxLineHeight * 0.8;
-      int rectHeight = maxLineHeight * 0.8 * 2;
-      this._ctx.fillRect(rectX, rectY, rectWidth, rectHeight);
+      int rectY = basePosition - maxLineHeight * 0.5;
+      int rectHeight = maxLineHeight * 0.5 * 2;
+      this._ctx.lineWidth = 1;
+      this._ctx.strokeStyle = "rgba(255,210,23,0.5)";
+      this._ctx.rect(rectX, rectY, rectWidth, rectHeight);
+      this._ctx.fill();
       //this._ctx.lineTo(this._drawDragDropStartLine, basePosition - maxLineHeight * 0.8);
       this._ctx.closePath();
       this._ctx.stroke();
@@ -190,8 +194,8 @@ class CanvasRenderer implements IRenderer {
       this._ctx.beginPath();
       this._ctx.lineWidth = 6;
       this._ctx.strokeStyle = cg;
-      this._ctx.moveTo(this._canvasMouseXPos, basePosition - maxLineHeight * 0.8);
-      this._ctx.lineTo(this._canvasMouseXPos, basePosition + maxLineHeight * 0.8);
+      this._ctx.moveTo(this._canvasMouseXPos, basePosition - maxLineHeight * 0.5);
+      this._ctx.lineTo(this._canvasMouseXPos, basePosition + maxLineHeight * 0.5);
       this._ctx.closePath();
       this._ctx.stroke();
     }
