@@ -67,7 +67,7 @@ class EasterEgg {
     var currentX = DartMath.parseInt( _canvas.style.left );
     var currentY = DartMath.parseInt( _canvas.style.top );
 
-    if (currentX > maxX) {
+    if (currentX >= maxX) {
       goLeft = true;
     }
     else {
@@ -85,6 +85,8 @@ class EasterEgg {
 
     _canvas.style.left = (goLeft ? currentX - currentSpeed : currentX + currentSpeed).toString() + 'px';
     _canvas.style.top = (goDown ? currentY + currentSpeed : currentY - currentSpeed).toString() + 'px';
+
+
   }
 
 }
