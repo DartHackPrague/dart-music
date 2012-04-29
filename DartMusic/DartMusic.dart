@@ -63,11 +63,19 @@ void main() {
   animator.perpetualColorChange();
 
   //IAudioData audioData = new RandomAudioData();
-
+  IAudioData audioData = new MP3AudioData(document.query("#playMe"));
+  
   DartMusic m = new DartMusic();
   m.addEffect(new CanvasCircleRenderer(document.query('#drawCirclesHere')));
-  m.addEffect(new CanvasRenderer(document.query('#drawHere'), document.query("#playMe")));
-  m.setAudioSource(new MP3AudioData(document.query("#playMe")));
+  
+  CanvasRenderer cr = new CanvasRenderer(document.query('#drawHere'), document.query("#playMe"));
+  cr.onSelectionChanged((List sel) {
+    audioData.setMinFreqRatio(sel[0]);
+    audioData.setMaxFreqRatio(sel[1]);
+  });
+  m.addEffect(cr);
+  
+  m.setAudioSource(audioData);
   m.run();
 
   DragDropHandler dragDrop = new DragDropHandler();
