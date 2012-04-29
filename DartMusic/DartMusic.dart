@@ -66,10 +66,11 @@ void main() {
   DragDropHandler dragDrop = new DragDropHandler();
 
   DartMusic m = new DartMusic();
-  m.addEffect(new CanvasRenderer(document.query('#drawHere'), document.query("#playMe")));
   m.addEffect(new CanvasCircleRenderer(document.query('#drawCirclesHere')));
+  m.addEffect(new CanvasRenderer(document.query('#drawHere'), document.query("#playMe")));
   m.setAudioSource(new MP3AudioData(document.query("#playMe")));
-  window.setTimeout(f() => m.run(), 50);
+
+  m.run();
 
   dragDrop.register();
 
