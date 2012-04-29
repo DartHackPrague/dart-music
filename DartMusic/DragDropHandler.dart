@@ -1,7 +1,8 @@
 class DragDropHandler {
+  DartMusic _dm;
   
-  
-  void register() {
+  void register(DartMusic m) {
+    _dm = m;
     document.on.drop.add(handleDrop);
   }
   
@@ -31,6 +32,7 @@ class DragDropHandler {
     audio.controls = true;
     audio.autoplay = true;
     audioOld.replaceWith(audio);
+    _dm.setAudioSource(new MP3AudioData(audio));
   }
   
   

@@ -61,7 +61,6 @@ void main() {
   animator.perpetualColorChange();
 
   //IAudioData audioData = new RandomAudioData();
-  DragDropHandler dragDrop = new DragDropHandler();
 
   DartMusic m = new DartMusic();
   m.addEffect(new CanvasRenderer(document.query('#drawHere'), document.query("#playMe")));
@@ -69,6 +68,7 @@ void main() {
   m.setAudioSource(new MP3AudioData(document.query("#playMe")));
   window.setTimeout(f() => m.run(), 50);
   
-  dragDrop.register();
+  DragDropHandler dragDrop = new DragDropHandler();
+  dragDrop.register(m);
 
 }
