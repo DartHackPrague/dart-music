@@ -1,4 +1,5 @@
 #import('dart:html');
+#import('dart:core');
 #import('dart:dom', prefix:'dom');
 
 #source('IAudioData.dart');
@@ -69,7 +70,7 @@ void main() {
   m.addEffect(new CanvasCircleRenderer(document.query('#drawCirclesHere')));
   m.setAudioSource(new MP3AudioData(document.query("#playMe")));
   window.setTimeout(f() => m.run(), 50);
-  
+
   dragDrop.register();
 
 }
