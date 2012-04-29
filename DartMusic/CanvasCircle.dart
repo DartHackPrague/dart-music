@@ -11,6 +11,10 @@ class CanvasCircle {
   int minSize = 25;
   int maxSize = 60;
 
+  int stepUp = 2;
+  int stepAside = 3;
+
+
   CanvasCircle(Position position, RgbColor color, int maxX, int maxY) {
     this.position = position;
     this.color = color;
@@ -21,8 +25,43 @@ class CanvasCircle {
     this.maxY = maxY;
   }
 
-  void move() {
+  bool getRandomDirection() {
+    var i = DartMath.Random(0, 2);
+    bool gotoLeft;
+    if (i > 1) {
+      gotoLeft = true;
+    }
+    else {
+      gotoLeft = false;
+    }
+    return gotoLeft;
+  }
+
+  void moveRandom() {
     var newPosition = Position.RandomPosition(this.minX, this.maxX, this.minY, this.maxY);
+    this.position = newPosition;
+  }
+
+  void moveAside() {
+    var x = this.position.x;
+    var y = this.position.y;
+    var gotoLeft = getRandomDirection();
+    if (gotoLeft) {
+      y += stepAside;
+    }
+    else {
+      y -= stepAside;
+    }
+
+    var newPosition = new Position(x, y);
+    this.position = newPosition;
+  }
+
+  void moveUp() {
+    var x = this.position.x - stepUp;
+    var y = this.position.y;
+
+    var newPosition = new Position(x, y);
     this.position = newPosition;
   }
 

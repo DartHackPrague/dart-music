@@ -89,7 +89,11 @@ class CanvasCircleRenderer implements IRenderer {
 
       circle.resize(resizeFactor);
 
-      //circle.move();
+      //circle.moveRandom();
+      circle.moveUp();
+      circle.moveAside();
+
+
       _renderCircle(circle, _ctx);
 
     }
