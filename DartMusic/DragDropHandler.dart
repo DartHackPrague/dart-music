@@ -42,7 +42,7 @@ class DragDropHandler {
     window.setTimeout(() {
       IAudioData data = _dm.getAudioData();
       data.updateSource(audio);
-      data.title = title;
+      data.setTitle(title);
       _dm.setAudioSource(data);
     }, 550);
   }

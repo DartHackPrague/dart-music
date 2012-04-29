@@ -20,4 +20,8 @@ class RandomAudioData implements IAudioData {
   void setMinFreqRatio(double freq) { }
   
   void setMaxFreqRatio(double freq) { }
+  
+  String getTitle() { return ""; }
+  
+  void setTitle(String title) { } 
 }
