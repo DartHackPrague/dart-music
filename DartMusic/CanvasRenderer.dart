@@ -19,6 +19,7 @@ class CanvasRenderer implements IRenderer {
     this._canvas = elm;
     this._audio = audio; // only to draw the progress bar
     this._ctx = this._canvas.getContext("2d");
+    //this._ctx.save(); // save default settings
     this.resize();
 
     this._canvas.on.mouseMove.add((MouseEvent e) {
@@ -99,55 +100,54 @@ class CanvasRenderer implements IRenderer {
     /**
      * splitting line
      */
-    this._ctx.beginPath();
-    this._ctx.strokeStyle = "rgba(150,150,150,0.2)";
+    //this._ctx.beginPath();
     this._ctx.lineWidth = 1;
-    this._ctx.moveTo(0, basePosition + 0.5);
-    this._ctx.lineTo(this._canvas.width, basePosition + 0.5);
-    this._ctx.closePath();
+    this._ctx.strokeStyle = "rgba(0,0,0,0.1)";
+    this._ctx.moveTo(0, basePosition);
+    this._ctx.lineTo(this._canvas.width, basePosition);
     this._ctx.stroke();
+    //this._ctx.closePath();
 
     /**
      * "mirror like" reflection
      */
     cg = this._ctx.createLinearGradient(0, this._canvas.height - this._bottomOffset - maxLineHeight / 2,
                                         0, this._canvas.height - this._bottomOffset + maxLineHeight / 2);
-    cg.addColorStop(0, "#000");
+    cg.addColorStop(0, "#d00");
+    cg.addColorStop(0.2, "#000");
     cg.addColorStop(0.5, "#000");
     cg.addColorStop(0.5, "rgba(0,0,0,0.8)");
     //cg.addColorStop(0.65, "rgba(0,0,0,0.8)");
-    cg.addColorStop(1, "rgba(0,0,0,0.3)");
+    cg.addColorStop(0.8, "rgba(0,0,0, 0.6)");
+    cg.addColorStop(1, "rgba(221,0,0,0.3)");
 
     this._ctx.beginPath();
-    this._ctx.strokeStyle = cg;
+    //this._ctx.strokeStyle = cg;
     this._ctx.lineWidth = lineWidth;
+    this._ctx.strokeStyle = cg;
 
     // power of 2 - just to make bigger differences between low and high values (looks better)
     //int max = (this._canvas.height * this._canvas.height / 6).toInt();
     int max = 255 * 255;
     for (int i=0; i < data.length; i++) {
-      int height = ((data[i] * data[i]) / max) * maxLineHeight;
-      this._ctx.moveTo(leftPos, basePosition + height / 2);
-      this._ctx.lineTo(leftPos, basePosition - height / 2);
-
-      leftPos += step;
-      
-      if (i % 5 == 0) {
-        this._ctx.strokeStyle = "#ff0";
-      } else {
-        this._ctx.strokeStyle = cg;
+      if (data[i] > 1) {
+        int height = ((data[i] * data[i]) / max) * maxLineHeight;
+        this._ctx.moveTo(leftPos, basePosition + height / 2);
+        this._ctx.lineTo(leftPos, basePosition - height / 2);
       }
+      leftPos += step;
     }
-    this._ctx.closePath();
+    
     this._ctx.stroke();
 
     /**
      * draw slider
      */
-    if (this._audio.readyState == MediaElement.HAVE_ENOUGH_DATA && !this._audio.ended) {
+    // draw slider only if audio is preloaded enought
+    if (this._audio.readyState == MediaElement.HAVE_ENOUGH_DATA && !this._audio.ended && this._audio.duration > 0) {
       this._ctx.beginPath();
-      leftPos = ((this._audio.currentTime / this._audio.duration) * this._canvas.width).round().toInt();
-      int height = (data[((this._audio.currentTime / this._audio.duration) * data.length).round().toInt()] / 255) * maxLineHeight * 1.1;
+      leftPos = ((this._audio.currentTime / this._audio.duration) * this._canvas.width).toInt();
+      int height = (data[((this._audio.currentTime / this._audio.duration) * data.length).toInt()] / 255) * maxLineHeight * 1.1;
       if (height < 100) {
         height = 100;
       }
@@ -170,8 +170,32 @@ class CanvasRenderer implements IRenderer {
       this._ctx.moveTo(leftPos - 3, basePosition - height / 2);
       this._ctx.lineTo(leftPos + 3, basePosition - height / 2);
   
-      this._ctx.closePath();
+      //this._ctx.closePath();
       this._ctx.stroke();
+      
+      // processed / total time
+      this._ctx.beginPath();
+      // add textual description
+      this._ctx.font = "bold 12px tahoma";
+      this._ctx.fillStyle = "#888";
+      //this._ctx.shadowBlur  = 2;
+      //this._ctx.shadowColor = '#888';
+            
+      String textTotal = DartMath.getNiceTime(this._audio.duration);
+      this._ctx.fillText(textTotal, this._canvas.width - 32, basePosition - 8);
+      this._ctx.fill();
+      
+      String textProgress = DartMath.getNiceTime(this._audio.currentTime);
+      this._ctx.fillText(textProgress, leftPos - 33, basePosition + 15);
+      this._ctx.fill();
+      
+      //this._ctx.strokeText(text, leftPos + 4, basePosition - 5);
+
+      //this._ctx.closePath();
+      this._ctx.fill();
+      
+      this._ctx.shadowBlur = 0;
+      //this._ctx.stroke();
     }
     
 
@@ -181,8 +205,8 @@ class CanvasRenderer implements IRenderer {
     cg = this._ctx.createLinearGradient(0, basePosition - maxLineHeight * 0.8,
                                         0, basePosition + maxLineHeight * 0.8);
     cg.addColorStop(0, "rgba(255,219,59,0.05)");
-    cg.addColorStop(0.2, "rgba(255,219,59,0.25)");
-    cg.addColorStop(0.8, "rgba(255,219,59,0.25)");
+    cg.addColorStop(0.25, "rgba(255,219,59,0.25)");
+    cg.addColorStop(0.75, "rgba(255,219,59,0.25)");
     cg.addColorStop(1, "rgba(255,219,59,0.05)");
     
     this._ctx.fillStyle = cg;
@@ -198,7 +222,7 @@ class CanvasRenderer implements IRenderer {
       this._ctx.rect(rectX, rectY, rectWidth, rectHeight);
       this._ctx.fill();
       //this._ctx.lineTo(this._drawDragDropStartLine, basePosition - maxLineHeight * 0.8);
-      this._ctx.closePath();
+      //this._ctx.closePath();
       this._ctx.stroke();
     }
     
@@ -211,9 +235,12 @@ class CanvasRenderer implements IRenderer {
       this._ctx.strokeStyle = cg;
       this._ctx.moveTo(this._canvasMouseXPos, basePosition - maxLineHeight * 0.5);
       this._ctx.lineTo(this._canvasMouseXPos, basePosition + maxLineHeight * 0.5);
-      this._ctx.closePath();
+      //this._ctx.closePath();
       this._ctx.stroke();
     }
+    
+    //this._ctx.restore();
+    //this._ctx.save();
   }
 
   void resize() {
