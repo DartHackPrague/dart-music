@@ -10,7 +10,6 @@ class CanvasCircleRenderer implements IRenderer {
   int maxCirclesCount = 15;
   static final PI2 = Math.PI * 2;
 
-  var internalTimer = null;
   int counter = 0;
   int limitToRender = 20;
 
@@ -21,15 +20,12 @@ class CanvasCircleRenderer implements IRenderer {
     resize();
 
     this.circles = _createCircles();
-
-    internalTimer = new Date.now();
   }
 
   void render(List data, int time) {
-
     if (counter >= limitToRender) {
       clearCanvas();
-      _renderCircles();
+      _renderCircles(data);
       counter = 0;
     }
     else {
@@ -47,7 +43,7 @@ class CanvasCircleRenderer implements IRenderer {
     this._bottomOffset = (this._canvas.height / 3).toInt();
 
     this.circles = _createCircles();
-    _renderCircles();
+    _renderCircles(null);
   }
 
 
@@ -65,14 +61,23 @@ class CanvasCircleRenderer implements IRenderer {
     return _circles;
   }
 
-  void _renderCircles() {
-    this.circles.forEach(f(circle) => _manageCircle(circle));
+  void _renderCircles(List data) {
+    if (data != null) {
+      int avg = DartMath.Average(data);
+      this.circles.forEach(f(circle) => _manageCircle(circle, avg));
+    }
+    else {
+      this.circles.forEach(f(circle) => _manageCircle(circle, circle.size));
+    }
+
   }
 
   //Kill circle if it should be dead
   //renders on position
-  void _manageCircle(CanvasCircle circle) {
+  void _manageCircle(CanvasCircle circle, int avg) {
     if (circle.opacity > 0) {
+
+      circle.resize(avg);
 
       circle.move();
       _renderCircle(circle, _ctx);
