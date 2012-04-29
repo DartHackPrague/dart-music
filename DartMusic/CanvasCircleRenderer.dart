@@ -6,9 +6,12 @@ class CanvasCircleRenderer implements IRenderer {
   int _drawDragDropStartLine = -1;
   List<CanvasCircle> circles;
 
-  int minCirclesCount = 4;
-  int maxCirclesCount = 15;
+  int minCirclesCount = 8;
+  int maxCirclesCount = 25;
+
   static final PI2 = Math.PI * 2;
+  static final volumeMax = 255;
+  static final volumeOptimum = 127;
 
   int counter = 0;
   int limitToRender = 20;
@@ -63,23 +66,30 @@ class CanvasCircleRenderer implements IRenderer {
 
   void _renderCircles(List data) {
     if (data != null) {
-      int avg = DartMath.Average(data);
-      this.circles.forEach(f(circle) => _manageCircle(circle, avg));
+      var factor = resizeFactor(DartMath.Average(data));
+
+      this.circles.forEach(f(circle) => _manageCircle(circle, factor));
     }
     else {
-      this.circles.forEach(f(circle) => _manageCircle(circle, circle.size));
+      this.circles.forEach(f(circle) => _manageCircle(circle, 1));
     }
 
   }
 
-  //Kill circle if it should be dead
+  double resizeFactor(data) {
+    var avg = DartMath.Average(data);
+    var factor = avg / volumeOptimum;
+    return factor;
+  }
+
+  //TODO Kill circle if it should be dead
   //renders on position
-  void _manageCircle(CanvasCircle circle, int avg) {
+  void _manageCircle(CanvasCircle circle, double resizeFactor) {
     if (circle.opacity > 0) {
 
-      circle.resize(avg);
+      circle.resize(resizeFactor);
 
-      circle.move();
+      //circle.move();
       _renderCircle(circle, _ctx);
 
     }
