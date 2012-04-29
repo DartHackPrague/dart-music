@@ -1,5 +1,10 @@
 class DragDropHandler {
   DartMusic _dm;
+  String title;
+  
+  DragDropHandler() {
+    title = "";
+  }
   
   void register(DartMusic m) {
     _dm = m;
@@ -18,6 +23,7 @@ class DragDropHandler {
     for(int i = 0; i < files.length; i++) {
       File file = files.item(i);
       print("dragged file: "+file.name);
+      title = file.name;
       //asynchronous load of dragged file (will call finishLoading callback when finished)
       reader.readAsDataURL(file);
     }
@@ -36,6 +42,7 @@ class DragDropHandler {
     window.setTimeout(() {
       IAudioData data = _dm.getAudioData();
       data.updateSource(audio);
+      data.title = title;
       _dm.setAudioSource(data);
     }, 550);
   }

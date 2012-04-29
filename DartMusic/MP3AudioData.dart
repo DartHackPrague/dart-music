@@ -10,9 +10,11 @@ class MP3AudioData implements IAudioData {
   int freqMaxTotal = 20000;
   dom.AudioContext audioContext;
   var source;
+  var title;
   
   MP3AudioData(AudioElement audio) {
     this._elm = audio;
+    title = "";
     audioContext = new dom.AudioContext();
     source = audioContext.createMediaElementSource(audio);
     dom.AudioGainNode volumeNode = audioContext.createGainNode();
