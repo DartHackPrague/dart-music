@@ -1,7 +1,8 @@
 class DartMath {
 
   static int Random(int min, int max) {
-    return (min + (Math.random() * (max - min))).round();
+    int value = (min + (Math.random() * (max - min))).round();
+    return value;
   }
 
 }
