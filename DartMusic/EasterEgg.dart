@@ -43,6 +43,8 @@ class EasterEgg {
     }
 
     _canvas.style.display = "block";
+    _canvas.style.top = '0px';
+    _canvas.style.left = '0px';
 
     _LoadImage();
 
@@ -79,8 +81,10 @@ class EasterEgg {
       goDown = true;
     }
 
-    _canvas.style.top = (goLeft ? currentX - minSpeed : currentX + minSpeed).toString() + 'px';
-    _canvas.style.left = (goDown ? currentY + minSpeed : currentY - minSpeed).toString() + 'px';
+    var currentSpeed = maxSpeed;
+
+    _canvas.style.left = (goLeft ? currentX - currentSpeed : currentX + currentSpeed).toString() + 'px';
+    _canvas.style.top = (goDown ? currentY + currentSpeed : currentY - currentSpeed).toString() + 'px';
   }
 
 }
