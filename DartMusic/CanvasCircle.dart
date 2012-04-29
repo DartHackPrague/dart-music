@@ -4,7 +4,7 @@ class CanvasCircle {
   var opacity;
   var size;
   var minX = 0;
-  var minY = 0;
+  var minY = 100;
   var maxX;
   var maxY;
   int minSize = 25;

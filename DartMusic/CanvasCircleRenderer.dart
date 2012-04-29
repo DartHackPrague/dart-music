@@ -6,8 +6,8 @@ class CanvasCircleRenderer implements IRenderer {
   int _drawDragDropStartLine = -1;
   List<CanvasCircle> circles;
 
-  int minCirclesCount = 1;
-  int maxCirclesCount = 5;
+  int minCirclesCount = 4;
+  int maxCirclesCount = 15;
   static final PI2 = Math.PI * 2;
 
   CanvasCircleRenderer(CanvasElement elm) {
@@ -21,7 +21,7 @@ class CanvasCircleRenderer implements IRenderer {
 
   void render(List data, int time) {
     // clear canvas
-    this._canvas.width = this._canvas.width;
+    //this._canvas.width = this._canvas.width;
 
     _renderCircles(this.circles);
   }
@@ -92,5 +92,5 @@ class CanvasCircleRenderer implements IRenderer {
    */
   void setAudioElement(AudioElement audio) {  }
 
-  
+
 }
