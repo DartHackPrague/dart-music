@@ -47,7 +47,9 @@ class CanvasRenderer implements IRenderer {
         if (this._drawDragDropSelectionBegin == this._drawDragDropSelectionEnd) {
           this._drawDragDropSelectionEnd = this._drawDragDropSelectionEndOld;
           this._drawDragDropSelectionBegin = this._drawDragDropSelectionBeginOld;
+          // jump to the specified position
           this._audio.currentTime = (e.pageX / this._canvas.width) * this._audio.duration;
+          this._audio.play();
         } else {
           this._drawDragDropSelectionEnd = e.pageX;
           this._canvasMouseXPos = e.pageX;
@@ -98,11 +100,11 @@ class CanvasRenderer implements IRenderer {
      */
     cg = this._ctx.createLinearGradient(0, this._canvas.height - this._bottomOffset - maxLineHeight / 2,
                                                        0, this._canvas.height - this._bottomOffset + maxLineHeight / 2);
-    cg.addColorStop(0, "#eee");
-    cg.addColorStop(0.5, "#eee");
-    cg.addColorStop(0.5, "rgba(238,238,238,0.9)");
-    cg.addColorStop(0.65, "rgba(238,238,238,0.5)");
-    cg.addColorStop(1, "rgba(238,238,238,0.05)");
+    cg.addColorStop(0, "#000");
+    cg.addColorStop(0.5, "#000");
+    cg.addColorStop(0.5, "rgba(50,50,50,0.9)");
+    cg.addColorStop(0.65, "rgba(50,50,50,0.5)");
+    cg.addColorStop(1, "rgba(50,50,50,0.05)");
 
     this._ctx.beginPath();
     this._ctx.strokeStyle = cg;

@@ -36,11 +36,11 @@ class CanvasCircleRenderer implements IRenderer {
   List<CanvasCircle> _createCircles() {
     var _circles = new List<CanvasCircle>();
 
-    var count = _getRandom(minCirclesCount, maxCirclesCount);
+    var count = DartMath.Random(minCirclesCount, maxCirclesCount);
     for(var i=0; i<count; i++) {
       var position = Position.RandomPosition(0, this._canvas.width, 0, this._canvas.height);
       var color = _getRandomColor(0, 255);
-      var circle = new CanvasCircle(position, color);
+      var circle = new CanvasCircle(position, color, this._canvas.width, this._canvas.height);
       _circles.add(circle);
     }
 
@@ -79,16 +79,10 @@ class CanvasCircleRenderer implements IRenderer {
     print('This circle should be killed now');
   }
 
-  int _getRandom(int min, int max) {
-    var randVal = min + (Math.random()*(max - min));
-    var result = Math.parseDouble(randVal.toString()); //Because there is no floor() or round() method in Math
-    return result;
-  }
-
   int _getRandomColor(int min, int max) {
-    var r = _getRandom(min, max);
-    var g = _getRandom(min, max);
-    var b = _getRandom(min, max);
+    var r = DartMath.Random(min, max);
+    var g = DartMath.Random(min, max);
+    var b = DartMath.Random(min, max);
     var color = new RgbColor(r, g, b);
     return color;
   }

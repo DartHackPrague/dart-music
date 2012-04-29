@@ -5,7 +5,7 @@ class BgColorAnimator {
   Element element;
   RgbColor color;
   int maxColorValue = 255;
-  int minColorValue = 180;
+  int minColorValue = 230;
   bool minReached = false;
   bool maxReached = false;
   bool incrementing = true; 
@@ -21,6 +21,7 @@ class BgColorAnimator {
     this.element.style.backgroundColor = this.color.toString();
   }
 
+  /*
   RgbColor getRandomColor() {
     //Dart bug - random is not random
     int r = 10;
@@ -30,6 +31,7 @@ class BgColorAnimator {
     RgbColor randomColor = new RgbColor(r, g, b);
     return randomColor;
   }
+  */
 
   RgbColor getNextColor(RgbColor currentColor) {
     if(incrementing) {

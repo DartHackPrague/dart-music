@@ -3,16 +3,23 @@ class CanvasCircle {
   var color;
   var opacity;
   var size;
+  var minX = 0;
+  var minY = 0;
+  var maxX;
+  var maxY;
+  int minSize = 25;
+  int maxSize = 60;
 
-  CanvasCircle(Position position, RgbColor color) {
+  CanvasCircle(Position position, RgbColor color, int maxX, int maxY) {
     this.position = position;
     this.color = color;
     this.opacity = 1;
-    this.size = 20;
+    this.size = DartMath.Random(minSize, maxSize);
   }
 
   void move() {
-    //var newPosition = new Position();
+    var newPosition = Position.RandomPosition(minX, maxX, minY, maxY);
+    this.position = newPosition;
   }
 
 }
