@@ -4,8 +4,17 @@ class EasterEgg {
   CanvasRenderingContext2D _ctx;
   int top = 100;
   int left = 100;
+  int minX = 0;
+  int maxX = 0;
+  int minY = 0;
+  int maxY = 0;
 
   String pathToImage = "images/dart_logo.png";
+
+  EasterEgg(int maxX, int maxY) {
+    this.maxX = maxX;
+    this.maxY = maxY;
+  }
 
   void Surprise() {
     if (_canvas == null) {
