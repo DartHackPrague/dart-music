@@ -12,4 +12,9 @@ class RandomAudioData implements IAudioData {
     
     return data;
   }
+  
+  AudioElement getElement() {
+    return null;
+  }
+  
 }
