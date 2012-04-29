@@ -27,12 +27,9 @@ div#dndArea {
 	 position: relative;
 	 -webkit-transition: opacity 0.5s linear;
 	 color: orange;
-	 font-weight: bold;
-	 
-	 
+	 font-weight: bold;	 
      text-shadow: 1px 1px 1px #0740eb;
      filter: dropshadow(color=#0740eb, offx=1, offy=1);
-        
 }
 
 div#dndArea p {
