@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title>DartMusic</title>
+    <link href="css/style.css" rel="stylesheet" media="screen"/>
+  </head>
+  <body>
+  
+  	<div id="main">
+  			<span class="buttons">
+	  			<a href="#" id="playButton">Play</a>
+	  			<a href="#" id="pauseButton">Pause</a>
+	  			<a href="#" id="eggButton">Easter Egg</a>
+	  		</span>
+  	
+	  	<div id="dndArea">
+	  		<p>Drop your mp3 file here!<br>You will see some dark magic</p>	  		
+	  	</div>
+	    
+	
+		<div class="controls">
+		    <audio src="music/test.mp3" id="playMe" autoplay loop>
+		  		Your browser does not support the audio element.
+		    </audio>
+	    </div>
+	    
+	    <canvas id="drawHere"></canvas>
+	    <canvas id="drawCirclesHere"></canvas>
+	    <canvas id="easterEgg" width="150" height="150"></canvas>
+	    
+    </div>
+    
+    <script type="application/dart" src="DartMusic.dart"></script>
+    <script src="http://dart.googlecode.com/svn/branches/bleeding_edge/dart/client/dart.js"></script>
+
+  </body>
+</html>
