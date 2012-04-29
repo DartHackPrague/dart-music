@@ -12,6 +12,7 @@ class CanvasRenderer implements IRenderer {
   int _canvasMouseXPos;
   int _drawDragDropSelectionBegin = -1, _drawDragDropSelectionEnd = -1;
   int _drawDragDropSelectionEndOld, _drawDragDropSelectionBeginOld;
+  var _onSelectionChangeCallback;
   //Map _gradients;
   
   CanvasRenderer(CanvasElement elm, AudioElement audio) {
@@ -55,6 +56,7 @@ class CanvasRenderer implements IRenderer {
         } else {
           this._drawDragDropSelectionEnd = e.pageX;
           this._canvasMouseXPos = e.pageX;
+          this._onSelectionChangeCallback(this.getSelection());
         }
         this._dragDropActive = false;
       }
@@ -64,6 +66,7 @@ class CanvasRenderer implements IRenderer {
       if (e.keyCode == 32) {
         this._drawDragDropSelectionEnd = -1;
         this._drawDragDropSelectionBegin = -1;
+        this._onSelectionChangeCallback([0, 1]);
         e.preventDefault();
       }
     });
@@ -144,7 +147,7 @@ class CanvasRenderer implements IRenderer {
     if (this._audio.readyState == MediaElement.HAVE_ENOUGH_DATA && !this._audio.ended) {
       this._ctx.beginPath();
       leftPos = ((this._audio.currentTime / this._audio.duration) * this._canvas.width).round().toInt();
-      int height = data[((this._audio.currentTime / this._audio.duration) * data.length).round().toInt()] * 1.4;
+      int height = (data[((this._audio.currentTime / this._audio.duration) * data.length).round().toInt()] / 255) * maxLineHeight * 1.1;
       if (height < 100) {
         height = 100;
       }
@@ -229,4 +232,16 @@ class CanvasRenderer implements IRenderer {
     
     return val1 < val2 ? [ val1, val2 ] : [ val2, val1 ];
   }
+  
+  void onSelectionChanged(callback) {
+    this._onSelectionChangeCallback = callback;
+  }
+  
+  /*
+  void onSelectionChanged(IAudioData ad) {
+    List sel = this.getSelection();
+    ad.setMinFreq(sel[0]);
+    ad.setMaxFreq(sel[1]);
+  }
+  */
 }
