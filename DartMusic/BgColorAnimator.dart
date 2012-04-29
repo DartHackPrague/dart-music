@@ -5,10 +5,10 @@ class BgColorAnimator {
   Element element;
   RgbColor color;
   int maxColorValue = 255;
-  int minColorValue = 230;
+  int minColorValue = 200;
   bool minReached = false;
   bool maxReached = false;
-  bool incrementing = true; 
+  bool incrementing = true;
   final int colorChangeStep = 3;
   final int colorChangeDelay = 200;
 
@@ -56,11 +56,11 @@ class BgColorAnimator {
     }
     return currentColor;
   }
-  
+
   bool isMaximal(int colorValue) {
     return (colorValue + colorChangeStep) > maxColorValue;
   }
-  
+
   bool isMinimal(int colorValue) {
     return (colorValue - colorChangeStep) < minColorValue;
   }

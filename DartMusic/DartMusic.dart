@@ -15,15 +15,18 @@
 #source('CanvasCircleRenderer.dart');
 #source('CanvasCircle.dart');
 #source('Position.dart');
+#source('EasterEgg.dart');
 
 
 class DartMusic {
 
   IAudioData _audioData;
   List _effects;
+  EasterEgg _egg;
 
   DartMusic() {
     this._effects = new List();
+    this._egg = new EasterEgg();
 
     window.on.resize.add((Event e) {
       for (final effect in this._effects) {
@@ -55,6 +58,27 @@ class DartMusic {
     }
   }
 
+  IAudioData getAudioData() {
+    return _audioData;
+  }
+
+  void setButtonsListener() {
+    var playButton = document.query("#playButton");
+    var pauseButton = document.query("#pauseButton");
+    var eggButton = document.query("#eggButton");
+
+    playButton.on.click.add((Event event) {
+      _audioData.getElement().play();
+    });
+
+    pauseButton.on.click.add((Event event) {
+      _audioData.getElement().pause();
+    });
+
+    eggButton.on.click.add((Event event) {
+      _egg.Surprise();
+    });
+  }
 }
 
 void main() {
@@ -64,21 +88,22 @@ void main() {
 
   //IAudioData audioData = new RandomAudioData();
   IAudioData audioData = new MP3AudioData(document.query("#playMe"));
-  
+
   DartMusic m = new DartMusic();
   m.addEffect(new CanvasCircleRenderer(document.query('#drawCirclesHere')));
-  
+
   CanvasRenderer cr = new CanvasRenderer(document.query('#drawHere'), document.query("#playMe"));
   cr.onSelectionChanged((List sel) {
     audioData.setMinFreqRatio(sel[0]);
     audioData.setMaxFreqRatio(sel[1]);
   });
   m.addEffect(cr);
-  
+
   m.setAudioSource(audioData);
   m.run();
 
   DragDropHandler dragDrop = new DragDropHandler();
   dragDrop.register(m);
 
+  m.setButtonsListener();
 }

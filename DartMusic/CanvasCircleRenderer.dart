@@ -6,7 +6,7 @@ class CanvasCircleRenderer implements IRenderer {
   int _drawDragDropStartLine = -1;
   List<CanvasCircle> circles;
 
-  int minCirclesCount = 8;
+  int minCirclesCount = 20;
   int maxCirclesCount = 25;
 
   static final PI2 = Math.PI * 2;
@@ -14,7 +14,7 @@ class CanvasCircleRenderer implements IRenderer {
   static final volumeOptimum = 127;
 
   int counter = 0;
-  int limitToRender = 3; //smaller number means MORE OFTEN
+  int limitToRender = 1; //smaller number means MORE OFTEN
 
   CanvasCircleRenderer(CanvasElement elm) {
     _canvas = elm;
@@ -89,7 +89,10 @@ class CanvasCircleRenderer implements IRenderer {
 
       circle.resize(resizeFactor);
 
-      //circle.move();
+      //circle.moveRandom();
+      circle.moveUp();
+      circle.moveAside();
+
       _renderCircle(circle, _ctx);
 
     }

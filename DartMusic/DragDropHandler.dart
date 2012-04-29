@@ -29,10 +29,14 @@ class DragDropHandler {
     
     AudioElement audio = new AudioElement();
     audio.src = e.target.result;
-    audio.controls = true;
+    audio.controls = false;
     audio.autoplay = true;
     audioOld.replaceWith(audio);
-    _dm.setAudioSource(new MP3AudioData(audio));
+    window.setTimeout(() {
+      IAudioData data = _dm.getAudioData();
+      data.updateSource(audio);
+      _dm.setAudioSource(data);
+    }, 550);
   }
   
   
