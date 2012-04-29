@@ -6,10 +6,13 @@
 #source('RandomAudioData.dart');
 #source('MP3AudioData.dart');
 #source('CanvasRenderer.dart');
-#source('CanvasCircleRenderer.dart');
 #source('BgColorAnimator.dart');
 #source('RgbColor.dart');
 #source('DragDropHandler.dart');
+
+#source('CanvasCircleRenderer.dart');
+#source('CanvasCircle.dart');
+#source('Position.dart');
 
 
 class DartMusic {
