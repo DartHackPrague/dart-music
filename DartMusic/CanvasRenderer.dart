@@ -6,6 +6,7 @@ class CanvasRenderer implements IRenderer {
   CanvasElement _canvas;
   CanvasRenderingContext2D _ctx;
   AudioElement _audio;
+  IAudioData _audioSource;
   
   int _bottomOffset;
   bool _dragDropActive = false;
@@ -247,9 +248,10 @@ class CanvasRenderer implements IRenderer {
     /**
      * render song title
      */
-    if (this._audio.title) {
-      TextMetrics metrics = this._ctx.measureText(this._audio.title);
-      this._ctx.fillText(this._audio.title, this._canvas.width - metrics.width - 10, this._canvas.height - 25);
+    if (!this._audioSource.getTitle().isEmpty()) {
+      TextMetrics metrics = this._ctx.measureText(this._audioSource.getTitle());
+      this._ctx.fillStyle = "#888";
+      this._ctx.fillText(this._audioSource.getTitle(), this._canvas.width - metrics.width - 10, this._canvas.height - 10);
     }
     
     //this._ctx.restore();
@@ -262,8 +264,9 @@ class CanvasRenderer implements IRenderer {
     this._bottomOffset = (this._canvas.height / 2.5).toInt();
   }
   
-  void setAudioElement(AudioElement audio) {
-    this._audio = audio;
+  void setAudioElement(IAudioData audio) {
+    this._audioSource = audio;
+    this._audio = audio.getElement();
   }
   
   List getSelection() {

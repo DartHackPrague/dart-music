@@ -127,7 +127,7 @@ class CanvasCircleRenderer implements IRenderer {
   /**
    * required by the interface definition
    */
-  void setAudioElement(AudioElement audio) {  }
+  void setAudioElement(IAudioData audio) {  }
 
 
 }
