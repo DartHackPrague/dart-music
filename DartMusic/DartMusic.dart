@@ -71,5 +71,4 @@ void main() {
   m.run();
   dragDrop.register();
 
-  m.registerAudio();
 }
