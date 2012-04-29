@@ -29,7 +29,7 @@ class DragDropHandler {
     
     AudioElement audio = new AudioElement();
     audio.src = e.target.result;
-    audio.controls = true;
+    audio.controls = false;
     audio.autoplay = true;
     audioOld.replaceWith(audio);
     window.setTimeout(() {
