@@ -6,8 +6,8 @@ class CanvasCircle {
   var oldSize;
   var minX = 0;
   var minY = 100;
-  var maxX;
-  var maxY;
+  var maxX; //size of canvas
+  var maxY;  //size of canvas
   int minSize = 25;
   int maxSize = 60;
 
@@ -28,7 +28,7 @@ class CanvasCircle {
   bool getRandomDirection() {
     var i = DartMath.Random(0, 2);
     bool gotoLeft;
-    if (i > 1) {
+    if (i >= 1) {
       gotoLeft = true;
     }
     else {
@@ -55,6 +55,8 @@ class CanvasCircle {
 
     var newPosition = new Position(x, y);
     this.position = newPosition;
+
+    _stayOnCanvas();
   }
 
   void moveUp() {
@@ -63,6 +65,8 @@ class CanvasCircle {
 
     var newPosition = new Position(x, y);
     this.position = newPosition;
+
+    _stayOnCanvas();
   }
 
   void resize(double factor) {
@@ -71,6 +75,22 @@ class CanvasCircle {
     }
     else {
       this.size = this.oldSize * factor;
+    }
+  }
+
+  //If position is outside the canvas -> reset it
+  void _stayOnCanvas() {
+    if (this.position.x > maxX) {
+      this.position.x = minX;
+    }
+    else if (this.position.x < minX) {
+      this.position.x = maxX;
+    }
+    else if (this.position.y > maxY) {
+      this.position.y = minY;
+    }
+    else if (this.position.y < minY) {
+      this.position.y = maxY;
     }
   }
 

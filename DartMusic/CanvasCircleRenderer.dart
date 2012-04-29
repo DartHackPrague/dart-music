@@ -93,7 +93,6 @@ class CanvasCircleRenderer implements IRenderer {
       circle.moveUp();
       circle.moveAside();
 
-
       _renderCircle(circle, _ctx);
 
     }
