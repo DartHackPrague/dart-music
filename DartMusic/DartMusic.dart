@@ -1,4 +1,5 @@
 #import('dart:html');
+#import('dart:core');
 #import('dart:dom', prefix:'dom');
 
 #source('IAudioData.dart');
@@ -62,14 +63,17 @@ void main() {
   animator.perpetualColorChange();
 
   //IAudioData audioData = new RandomAudioData();
-  DragDropHandler dragDrop = new DragDropHandler();
 
   DartMusic m = new DartMusic();
   m.addEffect(new CanvasCircleRenderer(document.query('#drawCirclesHere')));
   m.addEffect(new CanvasRenderer(document.query('#drawHere'), document.query("#playMe")));
   m.setAudioSource(new MP3AudioData(document.query("#playMe")));
-  window.setTimeout(f() => m.run(), 100);
   
+  DragDropHandler dragDrop = new DragDropHandler();
+  dragDrop.register(m);
+
+  m.run();
+
   dragDrop.register();
 
 }

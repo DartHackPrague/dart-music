@@ -10,6 +10,10 @@ class CanvasCircleRenderer implements IRenderer {
   int maxCirclesCount = 15;
   static final PI2 = Math.PI * 2;
 
+  var internalTimer = null;
+  int counter = 0;
+  int limitToRender = 20;
+
   CanvasCircleRenderer(CanvasElement elm) {
     _canvas = elm;
     _ctx = this._canvas.getContext("2d");
@@ -17,19 +21,33 @@ class CanvasCircleRenderer implements IRenderer {
     resize();
 
     this.circles = _createCircles();
+
+    internalTimer = new Date.now();
   }
 
   void render(List data, int time) {
-    // clear canvas
-    //this._canvas.width = this._canvas.width;
 
-    _renderCircles(this.circles);
+    if (counter >= limitToRender) {
+      clearCanvas();
+      _renderCircles();
+      counter = 0;
+    }
+    else {
+      counter++;
+    }
+  }
+
+  void clearCanvas() {
+    this._canvas.width = this._canvas.width;
   }
 
   void resize() {
     this._canvas.width = window.innerWidth;
     this._canvas.height = window.innerHeight;
     this._bottomOffset = (this._canvas.height / 3).toInt();
+
+    this.circles = _createCircles();
+    _renderCircles();
   }
 
 
@@ -47,17 +65,18 @@ class CanvasCircleRenderer implements IRenderer {
     return _circles;
   }
 
-
-  void _renderCircles(List<CanvasCircle> circles) {
-    circles.forEach(f(circle) => _manageCircle(circle));
+  void _renderCircles() {
+    this.circles.forEach(f(circle) => _manageCircle(circle));
   }
 
   //Kill circle if it should be dead
   //renders on position
   void _manageCircle(CanvasCircle circle) {
     if (circle.opacity > 0) {
-      _renderCircle(circle, _ctx);
+
       circle.move();
+      _renderCircle(circle, _ctx);
+
     }
     else {
       _killCircle(circle, _ctx);
