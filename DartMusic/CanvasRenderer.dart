@@ -1,20 +1,22 @@
 
 class CanvasRenderer implements IRenderer {
-  
+
   //static final BOTTOM_OFFSET = 200;
-  
+
   CanvasElement _canvas;
   CanvasRenderingContext2D _ctx;
   AudioElement _audio;
   int _bottomOffset;
   int _drawDragDropStartLine = -1;
-  
+
+  BgColorAnimator colorAnimator;
+
   CanvasRenderer(CanvasElement elm, AudioElement audio) {
     this._canvas = elm;
     this._audio = audio; // only to draw progress bar
     this._ctx = this._canvas.getContext("2d");
     this.resize();
-    
+
     this._canvas.on.mouseMove.add((MouseEvent e) {
       // mouse cursor is under the 1/3 of the page
       if (e.pageY > this._canvas.height * 0.3) {
@@ -23,13 +25,17 @@ class CanvasRenderer implements IRenderer {
         this._drawDragDropStartLine = -1;
       }
     });
+
+    colorAnimator = new BgColorAnimator(_canvas);
+    colorAnimator.color = new RgbColor(200, 10, 50);
+
   }
-  
+
   void render(List data) {
     // clear canvas
     this._canvas.width = this._canvas.width;
-    
-    // maximum height that any line in the analyzer can have 
+
+    // maximum height that any line in the analyzer can have
     int maxLineHeight = (0.3 * this._canvas.height).toInt();
     if (maxLineHeight * 2 > this._canvas.height * 0.8) {
       maxLineHeight = (this._canvas.height / 3).toInt();
@@ -42,7 +48,7 @@ class CanvasRenderer implements IRenderer {
     int lineWidth = step.ceil().toInt();
     // start y position (middle of the frequency analyzer)
     int basePosition = this._canvas.height - this._bottomOffset;
-    
+
     /**
      * "mirror like" reflection
      */
@@ -53,17 +59,24 @@ class CanvasRenderer implements IRenderer {
     this._ctx.lineTo(this._canvas.width, basePosition);
     this._ctx.closePath();
     this._ctx.stroke();
-    
+
     /**
      * "mirror like" reflection
      */
     CanvasGradient cg = this._ctx.createLinearGradient(0, this._canvas.height - this._bottomOffset - maxLineHeight / 2,
                                                        0, this._canvas.height - this._bottomOffset + maxLineHeight / 2);
+
+    RgbColor nextColor = colorAnimator.getNextColor(colorAnimator.color);
     cg.addColorStop(0, "#eee");
-    cg.addColorStop(0.5, "#eee");
-    cg.addColorStop(0.5, "rgba(238,238,238,0.9)");
-    cg.addColorStop(0.65, "rgba(238,238,238,0.5)");
+    cg.addColorStop(0.5, nextColor.toString());
+
+
+    //cg.addColorStop(0.5, "rgba(238,238,238,0.9)");
+    cg.addColorStop(0.5, nextColor.toString());
+    //cg.addColorStop(0.65, "rgba(238,238,238,0.5)");
+    cg.addColorStop(0.65, nextColor.toString());
     cg.addColorStop(1, "rgba(238,238,238,0.05)");
+
     this._ctx.beginPath();
     this._ctx.strokeStyle = cg;
     this._ctx.lineWidth = lineWidth;
@@ -74,12 +87,12 @@ class CanvasRenderer implements IRenderer {
       int height = (data[i] * data[i]) / max * maxLineHeight;
       this._ctx.moveTo(leftPos, basePosition + height / 2);
       this._ctx.lineTo(leftPos, basePosition - height / 2);
-      
+
       leftPos += step;
     }
     this._ctx.closePath();
     this._ctx.stroke();
-    
+
     /**
      * draw "progress bar"
      */
@@ -110,7 +123,7 @@ class CanvasRenderer implements IRenderer {
 
     this._ctx.closePath();
     this._ctx.stroke();
-    
+
     /**
      * draw drag & drop selection line
      */
@@ -124,7 +137,7 @@ class CanvasRenderer implements IRenderer {
       this._ctx.stroke();
     }
   }
-  
+
   void resize() {
     this._canvas.width = window.innerWidth;
     this._canvas.height = window.innerHeight;

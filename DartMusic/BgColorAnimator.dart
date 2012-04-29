@@ -61,7 +61,6 @@ class BgColorAnimator {
       }
     }
 
-
     return currentColor;
   }
 

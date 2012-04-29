@@ -23,7 +23,7 @@ class DartMusic {
   DartMusic() {
     this._delay = (1000 / FPS).toInt();
     this._effects = new List();
-    
+
     window.on.resize.add((Event e) {
       for (final effect in this._effects) {
         effect.resize();
@@ -57,7 +57,7 @@ class DartMusic {
       reader.on.load.add( (Event e) {
         print("file loaded ");
         AudioElement audioOld = document.query("audio");
-        
+
         AudioElement audio = new AudioElement();
         audio.src = e.target.result;
         audio.controls = true;
@@ -76,29 +76,26 @@ class DartMusic {
   void addEffect(IRenderer effect) {
     this._effects.add(effect);
   }
-  
+
   void setAudioSource(IAudioData audio) {
     this._audioData = audio;
   }
-  
+
 }
 
 void main() {
   Element body = document.query("body");
   BgColorAnimator animator = new BgColorAnimator(body);
-  //animator.perpetualColorChange();
-  animator.changeBgColor();
-  
+  animator.perpetualColorChange();
+
   //IAudioData audioData = new RandomAudioData();
   DragDropHandler dragDrop = new DragDropHandler();
-  
-  
+
   DartMusic m = new DartMusic();
   m.addEffect(new CanvasRenderer(document.query('#drawHere'), document.query("#playMe")));
   m.setAudioSource(new MP3AudioData(document.query("#playMe")));
   m.run();
   dragDrop.register();
-  
-  //m.registerAudio();
-  //m.registerDragNDrop();
+
+  m.registerAudio();
 }
