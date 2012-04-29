@@ -10,6 +10,7 @@
 #source('RgbColor.dart');
 #source('DragDropHandler.dart');
 
+#source('DartMath.dart');
 #source('CanvasCircleRenderer.dart');
 #source('CanvasCircle.dart');
 #source('Position.dart');
