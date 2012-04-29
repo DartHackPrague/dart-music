@@ -10,6 +10,10 @@
 #source('RgbColor.dart');
 #source('DragDropHandler.dart');
 
+#source('CanvasCircleRenderer.dart');
+#source('CanvasCircle.dart');
+#source('Position.dart');
+
 
 class DartMusic {
 
@@ -18,7 +22,7 @@ class DartMusic {
 
   DartMusic() {
     this._effects = new List();
-    
+
     window.on.resize.add((Event e) {
       for (final effect in this._effects) {
         effect.resize();
@@ -38,67 +42,33 @@ class DartMusic {
     window.webkitRequestAnimationFrame(this.update);
   }
 
-
-  void registerDragNDrop() {
-    document.on.drop.add( function( MouseEvent event ) {
-      event.preventDefault();
-      event.stopPropagation();
-      //obtaining file path
-      FileList files = event.dataTransfer.files;
-      FileReader reader = new FileReader();
-      reader.on.loadStart.add((Event e) { print("load start"); });
-      reader.on.progress.add((Event e) { print("progress"); });
-      reader.on.error.add((Event e) { print("error"); });
-
-      reader.on.load.add( (Event e) {
-        print("file loaded ");
-        AudioElement audioOld = document.query("audio");
-        
-        AudioElement audio = new AudioElement();
-        audio.src = e.target.result;
-        audio.controls = true;
-        audioOld.replaceWith(audio);
-        //document.body.nodes.add(audio);
-      });
-      for(int i = 0; i < files.length; i++) {
-        File file = files.item(i);
-        print("dragged file: "+file.name);
-        reader.readAsDataURL(file);
-      }
-
-    });
-  }
-
   void addEffect(IRenderer effect) {
     this._effects.add(effect);
   }
-  
+
   void setAudioSource(IAudioData audio) {
     this._audioData = audio;
     for (final effect in this._effects) {
       effect.setAudioElement(audio.getElement());
     }
   }
-  
+
 }
 
 void main() {
   Element body = document.query("body");
   BgColorAnimator animator = new BgColorAnimator(body);
-  //animator.perpetualColorChange();
-  animator.changeBgColor();
-  
+  animator.perpetualColorChange();
+
   //IAudioData audioData = new RandomAudioData();
   DragDropHandler dragDrop = new DragDropHandler();
-  
-  
+
   DartMusic m = new DartMusic();
   m.addEffect(new CanvasRenderer(document.query('#drawHere'), document.query("#playMe")));
+  m.addEffect(new CanvasCircleRenderer(document.query('#drawCirclesHere')));
   m.setAudioSource(new MP3AudioData(document.query("#playMe")));
   window.setTimeout(f() => m.run(), 50);
   
   dragDrop.register();
-  
-  //m.registerAudio();
-  //m.registerDragNDrop();
+
 }

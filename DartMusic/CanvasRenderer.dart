@@ -1,13 +1,13 @@
 
 class CanvasRenderer implements IRenderer {
-  
+
   //static final BOTTOM_OFFSET = 200;
-  
+
   CanvasElement _canvas;
   CanvasRenderingContext2D _ctx;
   AudioElement _audio;
+  
   int _bottomOffset;
-  //int _drawDragDropStartLine = -1;
   bool _dragDropActive = false;
   int _canvasMouseXPos;
   int _drawDragDropSelectionBegin = -1, _drawDragDropSelectionEnd = -1;
@@ -19,7 +19,7 @@ class CanvasRenderer implements IRenderer {
     this._audio = audio; // only to draw the progress bar
     this._ctx = this._canvas.getContext("2d");
     this.resize();
-    
+
     this._canvas.on.mouseMove.add((MouseEvent e) {
       // mouse cursor is under the 1/3 of the page
       if (e.pageY > this._canvas.height * 0.3) {
@@ -68,6 +68,7 @@ class CanvasRenderer implements IRenderer {
     CanvasGradient cg;
     
     // maximum height that any line in the analyzer can have 
+
     int maxLineHeight = (0.3 * this._canvas.height).toInt();
     if (maxLineHeight * 2 > this._canvas.height * 0.8) {
       maxLineHeight = (this._canvas.height / 3).toInt();
@@ -80,7 +81,7 @@ class CanvasRenderer implements IRenderer {
     int lineWidth = step.ceil().toInt();
     // start y position (middle of the frequency analyzer)
     int basePosition = this._canvas.height - this._bottomOffset;
-    
+
     /**
      * "mirror like" reflection
      */
@@ -91,7 +92,7 @@ class CanvasRenderer implements IRenderer {
     this._ctx.lineTo(this._canvas.width, basePosition);
     this._ctx.closePath();
     this._ctx.stroke();
-    
+
     /**
      * "mirror like" reflection
      */
@@ -102,6 +103,7 @@ class CanvasRenderer implements IRenderer {
     cg.addColorStop(0.5, "rgba(238,238,238,0.9)");
     cg.addColorStop(0.65, "rgba(238,238,238,0.5)");
     cg.addColorStop(1, "rgba(238,238,238,0.05)");
+
     this._ctx.beginPath();
     this._ctx.strokeStyle = cg;
     this._ctx.lineWidth = lineWidth;
@@ -112,6 +114,7 @@ class CanvasRenderer implements IRenderer {
       int height = (data[i] * data[i]) / max * maxLineHeight;
       this._ctx.moveTo(leftPos, basePosition + height / 2);
       this._ctx.lineTo(leftPos, basePosition - height / 2);
+
       leftPos += step;
       
       if (i % 5 == 0) {
@@ -122,7 +125,7 @@ class CanvasRenderer implements IRenderer {
     }
     this._ctx.closePath();
     this._ctx.stroke();
-    
+
     /**
      * draw "progress bar"
      */
@@ -153,7 +156,6 @@ class CanvasRenderer implements IRenderer {
 
     this._ctx.closePath();
     this._ctx.stroke();
-    
     
     cg = this._ctx.createLinearGradient(0, basePosition - maxLineHeight * 0.8,
                                         0, basePosition + maxLineHeight * 0.8);
@@ -192,7 +194,7 @@ class CanvasRenderer implements IRenderer {
       this._ctx.stroke();
     }
   }
-  
+
   void resize() {
     this._canvas.width = window.innerWidth;
     this._canvas.height = window.innerHeight;

@@ -17,10 +17,10 @@ class DragDropHandler {
     for(int i = 0; i < files.length; i++) {
       File file = files.item(i);
       print("dragged file: "+file.name);
+      //asynchronous load of dragged file (will call finishLoading callback when finished)
       reader.readAsDataURL(file);
     }
   }
-  
   
   void finishLoading(Event e) {
     print("file loaded ");
