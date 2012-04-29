@@ -2,7 +2,7 @@
 interface IAudioData {
   List getData();
   AudioElement getElement();
-  void setMinFreq(int freq);
-  void setMaxFreq(int freq);  
+  void setMinFreqRatio(double freq);
+  void setMaxFreqRatio(double freq);  
   
 }

@@ -7,6 +7,7 @@ class MP3AudioData implements IAudioData {
   dom.BiquadFilterNode _lowpassFilter;
   int _freqMin = 0;
   int _freqMax = 20000;
+  int freqMaxTotal = 20000;
   
   MP3AudioData(audio) {
     this._elm = audio;
@@ -40,13 +41,13 @@ class MP3AudioData implements IAudioData {
     return this._elm;
   }
   
-  void setMaxFreq(int freq) {
-    _freqMax = freq;
+  void setMaxFreqRatio(double freq) {
+    _freqMax = (freq*freqMaxTotal).toInt();
     _lowpassFilter.frequency.value = _freqMax;
   }
   
-  void setMinFreq(int freq) {
-    _freqMin = freq;
+  void setMinFreqRatio(double freq) {
+    _freqMin = (freq*freqMaxTotal).toInt();
     _highpassFilter.frequency.value = _freqMin;
   }
 }
