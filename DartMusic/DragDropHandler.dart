@@ -31,6 +31,7 @@ class DragDropHandler {
     audio.src = e.target.result;
     audio.controls = false;
     audio.autoplay = true;
+    audio.loop = true;
     audioOld.replaceWith(audio);
     window.setTimeout(() {
       IAudioData data = _dm.getAudioData();
