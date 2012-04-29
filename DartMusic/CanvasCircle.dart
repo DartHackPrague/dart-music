@@ -24,4 +24,8 @@ class CanvasCircle {
     this.position = newPosition;
   }
 
+  void resize(int factor) {
+    this.size = factor; //TODO
+  }
+
 }
