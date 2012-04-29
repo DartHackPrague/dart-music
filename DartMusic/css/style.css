@@ -12,11 +12,11 @@ div#main {
 }
 
 div#dndArea {
-	 width: 95%;
-	 height: 95px;
+	 width: 90%;
+	 max-height: 95px;
 	 padding: 10px;
 	 text-align:center;
-	 margin: 15px auto;
+	 margin: 5px auto;
 	 background-color: #555;
 	 border: 3px dotted #aaa;
 	 border-radius: 5px;
@@ -28,10 +28,18 @@ div#dndArea {
 	 -webkit-transition: opacity 0.5s linear;
 }
 
+div#dndArea p {
+	font-size: 16px;
+	margin-bottom: 5px;
+	margin-top: 5px;
+
+}
+
 div#dndArea:hover {
 	opacity: 0.9;
 	-webkit-transition: opacity 0.5s linear;
 }
+
 
 
 canvas#drawHere {
@@ -53,9 +61,15 @@ canvas#drawCirclesHere {
 	z-index: 100;
 }
 
-@-webkit-keyframes pulse {
-    from { box-shadow:0 0 1px #23B2EB; }
-    15%  { box-shadow:0 0 35px #23B2EB; }
-    to   { box-shadow:0 0 1px #23B2EB; }
-}
 
+@media only screen and (min-height: 400px) {
+	div#dndArea p {
+		font-size: 22px;
+		margin-bottom: 22px;
+		margin-top: 22px;
+	}
+	
+	div#dndArea {
+		margin: 15px auto;
+	}
+}

@@ -144,7 +144,7 @@ class CanvasRenderer implements IRenderer {
     if (this._audio.readyState == MediaElement.HAVE_ENOUGH_DATA && !this._audio.ended) {
       this._ctx.beginPath();
       leftPos = ((this._audio.currentTime / this._audio.duration) * this._canvas.width).round().toInt();
-      int height = data[((this._audio.currentTime / this._audio.duration) * data.length).round().toInt()] * 1.4;
+      int height = (data[((this._audio.currentTime / this._audio.duration) * data.length).round().toInt()] / 255) * maxLineHeight * 1.1;
       if (height < 100) {
         height = 100;
       }
