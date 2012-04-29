@@ -17,7 +17,7 @@ class DartMath {
     result = total / len;
     return result;
   }
-  
+
   static String getNiceTime(double time) {
     int minutes = (time / 60).floor().toInt();
     int seconds = (time % 60).floor().toInt();
@@ -26,6 +26,12 @@ class DartMath {
     sb.add(':');
     sb.add(seconds < 10 ? '0' + seconds : seconds);
     return sb.toString();
+  }
+
+  static int parseInt(String str) {
+    str = str.replaceFirst('px', '');
+    int value = Math.parseInt(str);
+    return value;
   }
 
 }
