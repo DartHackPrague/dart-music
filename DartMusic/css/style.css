@@ -40,6 +40,12 @@ canvas#drawHere {
 	z-index: 1;  
 }
 
+canvas#drawCirclesHere {
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
 .controls {
 	position: absolute;
 	top: 150px; /* below the dnd area */

@@ -58,6 +58,13 @@ class CanvasRenderer implements IRenderer {
       }
     });
     
+    window.on.keyPress.add((KeyboardEvent e) {
+      if (e.keyCode == 32) {
+        this._drawDragDropSelectionEnd = -1;
+        this._drawDragDropSelectionBegin = -1;
+        e.preventDefault();
+      }
+    });
     
     //this._gradients = new Map();
     //this._gradients['selection'] = 
@@ -71,7 +78,7 @@ class CanvasRenderer implements IRenderer {
     
     // maximum height that any line in the analyzer can have 
 
-    int maxLineHeight = (0.5 * this._canvas.height).toInt();
+    int maxLineHeight = (0.6 * this._canvas.height).toInt();
     /*if (maxLineHeight * 2 > this._canvas.height * 0.8) {
       maxLineHeight = (this._canvas.height / 3).toInt();
     }*/
@@ -103,8 +110,8 @@ class CanvasRenderer implements IRenderer {
     cg.addColorStop(0, "#000");
     cg.addColorStop(0.5, "#000");
     cg.addColorStop(0.5, "rgba(50,50,50,0.9)");
-    cg.addColorStop(0.65, "rgba(50,50,50,0.5)");
-    cg.addColorStop(1, "rgba(50,50,50,0.05)");
+    cg.addColorStop(0.65, "rgba(50,50,50,0.7)");
+    cg.addColorStop(1, "rgba(50,50,50,0.3)");
 
     this._ctx.beginPath();
     this._ctx.strokeStyle = cg;
@@ -132,46 +139,49 @@ class CanvasRenderer implements IRenderer {
     /**
      * draw slider
      */
-    this._ctx.beginPath();
-    leftPos = ((this._audio.currentTime / this._audio.duration) * this._canvas.width).round().toInt();
-    int height = data[((this._audio.currentTime / this._audio.duration) * data.length).round().toInt()];
-    if (height < 100) {
-      height = 100;
+    if (this._audio.readyState == MediaElement.HAVE_ENOUGH_DATA) {
+      this._ctx.beginPath();
+      leftPos = ((this._audio.currentTime / this._audio.duration) * this._canvas.width).round().toInt();
+      int height = data[((this._audio.currentTime / this._audio.duration) * data.length).round().toInt()] * 1.2;
+      if (height < 100) {
+        height = 100;
+      }
+      // copy slider mirror like reflection from above
+      cg = this._ctx.createLinearGradient(0, basePosition - maxLineHeight,
+                                          0, basePosition + maxLineHeight);
+      cg.addColorStop(0, "#999");
+      cg.addColorStop(0.5, "#999");
+      cg.addColorStop(0.5, "rgba(160,160,160,0.6)");
+      cg.addColorStop(0.65, "rgba(160,160,160,0.3)");
+      cg.addColorStop(1, "rgba(160,160,160,0.05)");
+      this._ctx.strokeStyle = cg;
+      this._ctx.lineWidth = 2;
+      // line
+      this._ctx.moveTo(leftPos, basePosition + height / 2);
+      this._ctx.lineTo(leftPos, basePosition - height / 2);
+      // little arrows
+      this._ctx.moveTo(leftPos - 3, basePosition + height / 2);
+      this._ctx.lineTo(leftPos + 3, basePosition + height / 2);
+      this._ctx.moveTo(leftPos - 3, basePosition - height / 2);
+      this._ctx.lineTo(leftPos + 3, basePosition - height / 2);
+  
+      this._ctx.closePath();
+      this._ctx.stroke();
     }
-    // copy slider mirror like reflection from above
-    cg = this._ctx.createLinearGradient(0, basePosition - maxLineHeight,
-                                        0, basePosition + maxLineHeight);
-    cg.addColorStop(0, "#999");
-    cg.addColorStop(0.5, "#999");
-    cg.addColorStop(0.5, "rgba(160,160,160,0.6)");
-    cg.addColorStop(0.65, "rgba(160,160,160,0.3)");
-    cg.addColorStop(1, "rgba(160,160,160,0.05)");
-    this._ctx.strokeStyle = cg;
-    this._ctx.lineWidth = 2;
-    // line
-    this._ctx.moveTo(leftPos, basePosition + height / 2);
-    this._ctx.lineTo(leftPos, basePosition - height / 2);
-    // little arrows
-    this._ctx.moveTo(leftPos - 3, basePosition + height / 2);
-    this._ctx.lineTo(leftPos + 3, basePosition + height / 2);
-    this._ctx.moveTo(leftPos - 3, basePosition - height / 2);
-    this._ctx.lineTo(leftPos + 3, basePosition - height / 2);
-
-    this._ctx.closePath();
-    this._ctx.stroke();
     
-    cg = this._ctx.createLinearGradient(0, basePosition - maxLineHeight * 0.8,
-                                        0, basePosition + maxLineHeight * 0.8);
-    cg.addColorStop(0, "rgba(255,210,23,0.05)");
-    cg.addColorStop(0.2, "rgba(255,210,23,0.25)");
-    cg.addColorStop(0.8, "rgba(255,210,23,0.25)");
-    cg.addColorStop(1, "rgba(255,210,23,0.05)");
-    
-    this._ctx.fillStyle = cg;
 
     /**
      * draw drag & drop selected area
-     */ 
+     */
+    cg = this._ctx.createLinearGradient(0, basePosition - maxLineHeight * 0.8,
+                                        0, basePosition + maxLineHeight * 0.8);
+    cg.addColorStop(0, "rgba(255,219,59,0.05)");
+    cg.addColorStop(0.2, "rgba(255,219,59,0.25)");
+    cg.addColorStop(0.8, "rgba(255,219,59,0.25)");
+    cg.addColorStop(1, "rgba(255,219,59,0.05)");
+    
+    this._ctx.fillStyle = cg;
+
     if (this._drawDragDropSelectionBegin != -1 && this._drawDragDropSelectionEnd != -1) {
       this._ctx.beginPath();
       int rectWidth = (this._drawDragDropSelectionEnd - this._drawDragDropSelectionBegin).abs();
@@ -204,7 +214,7 @@ class CanvasRenderer implements IRenderer {
   void resize() {
     this._canvas.width = window.innerWidth;
     this._canvas.height = window.innerHeight;
-    this._bottomOffset = (this._canvas.height / 3).toInt();
+    this._bottomOffset = (this._canvas.height / 2.5).toInt();
   }
   
   void setAudioElement(AudioElement audio) {
