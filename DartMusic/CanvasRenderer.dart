@@ -141,7 +141,7 @@ class CanvasRenderer implements IRenderer {
     /**
      * draw slider
      */
-    if (this._audio.readyState == MediaElement.HAVE_ENOUGH_DATA) {
+    if (this._audio.readyState == MediaElement.HAVE_ENOUGH_DATA && !this._audio.ended) {
       this._ctx.beginPath();
       leftPos = ((this._audio.currentTime / this._audio.duration) * this._canvas.width).round().toInt();
       int height = data[((this._audio.currentTime / this._audio.duration) * data.length).round().toInt()] * 1.4;
@@ -221,5 +221,12 @@ class CanvasRenderer implements IRenderer {
   
   void setAudioElement(AudioElement audio) {
     this._audio = audio;
+  }
+  
+  List getSelection() {
+    double val1 = this._drawDragDropSelectionBegin == -1 ? 0 : this._drawDragDropSelectionBegin.abs() / this._canvas.width;
+    double val2 = this._drawDragDropSelectionEnd == -1 ? 0 : this._drawDragDropSelectionEnd.abs() / this._canvas.width;
+    
+    return val1 < val2 ? [ val1, val2 ] : [ val2, val1 ];
   }
 }
