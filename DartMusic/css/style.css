@@ -28,7 +28,7 @@ div#dndArea {
 
 div#dndArea:hover {
 	 opacity: 1.0;
-	 -webkit-animation:pulse 2s infinite linear; 
+	 -webkit-animation:pulse 2s infinite linear, pulse 3s infinite linear;
 }
 
 canvas#drawHere {
@@ -45,7 +45,7 @@ canvas#drawHere {
 }
 
 @-webkit-keyframes pulse {
-    from { box-shadow:0 0 1px #A2D5DF; }
-    15%  { box-shadow:0 0 35px #0A70FF; }
-    to   { box-shadow:0 0 1px #A2D5DF; }
+    from { box-shadow:0 0 1px #23B2EB; }
+    15%  { box-shadow:0 0 35px #23B2EB; }
+    to   { box-shadow:0 0 1px #23B2EB; }
 }

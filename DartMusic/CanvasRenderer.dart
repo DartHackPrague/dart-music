@@ -71,7 +71,7 @@ class CanvasRenderer implements IRenderer {
     
     // maximum height that any line in the analyzer can have 
 
-    int maxLineHeight = (0.3 * this._canvas.height).toInt();
+    int maxLineHeight = (0.4 * this._canvas.height).toInt();
     if (maxLineHeight * 2 > this._canvas.height * 0.8) {
       maxLineHeight = (this._canvas.height / 3).toInt();
     }

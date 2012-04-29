@@ -10,28 +10,25 @@ class BgColorAnimator {
   bool maxReached = false;
   bool incrementing = true; 
   final int colorChangeStep = 3;
-  final int colorChangeDelay = 100;
+  final int colorChangeDelay = 200;
 
   BgColorAnimator(Element element) {
     this.element = element;
-    this.color = new RgbColor(200, 90, 40);
+    this.color = this.getRandomColor();
   }
 
   void changeBgColor() {
     this.element.style.backgroundColor = this.color.toString();
   }
 
-  /*
   RgbColor getRandomColor() {
     //Dart bug - random is not random
-    int r = 10;
-    int g = 50;
-    int b = 200;
+    int r = DartMath.Random(this.minColorValue, this.maxColorValue);
+    int g = DartMath.Random(this.minColorValue, this.maxColorValue);
+    int b = DartMath.Random(this.minColorValue, this.maxColorValue);
 
-    RgbColor randomColor = new RgbColor(r, g, b);
-    return randomColor;
+    return new RgbColor(r, g, b);
   }
-  */
 
   RgbColor getNextColor(RgbColor currentColor) {
     if(incrementing) {
