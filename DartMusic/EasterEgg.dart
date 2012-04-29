@@ -4,8 +4,16 @@ class EasterEgg {
   CanvasRenderingContext2D _ctx;
   int top = 100;
   int left = 100;
+  int minX = 0;
+  int maxX = 0;
+  int minY = 0;
+  int maxY = 0;
+
+  int minSpeed = 2; //px
+  int maxSpeed = 10;
 
   String pathToImage = "images/dart_logo.png";
+
 
   void Surprise() {
     if (_canvas == null) {
@@ -15,6 +23,9 @@ class EasterEgg {
       _canvas.style.position = "absolute";
       _canvas.style.top = top.toString() + 'px';
       _canvas.style.left = left.toString() + 'px';
+
+      maxX = window.innerWidth;
+      maxY = window.innerHeight;
     }
 
     _LoadImage();
@@ -32,9 +43,13 @@ class EasterEgg {
   }
 
   void _DoCrazyMovements() {
-    _canvas.style.position = "absolute";
-    _canvas.style.top = '400px';
-    _canvas.style.left = '600px';
+    //move canvas arround
+
+    var currentX = DartMath.parseInt( _canvas.style.left );
+    var currentY = DartMath.parseInt( _canvas.style.top );
+
+    _canvas.style.top = (currentX + minSpeed).toString() + 'px';
+    _canvas.style.left = (currentX + minSpeed).toString() + 'px';
   }
 
 }
