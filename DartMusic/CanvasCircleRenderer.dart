@@ -15,11 +15,12 @@ class CanvasCircleRenderer implements IRenderer {
 
     resize();
 
-    circles = createCircles();
+    this.circles = _createCircles();
   }
 
   void render(List data) {
     print('rendered ');
+    _renderCircles(this.circles);
   }
 
   void resize() {
@@ -28,32 +29,37 @@ class CanvasCircleRenderer implements IRenderer {
     this._bottomOffset = (this._canvas.height / 3).toInt();
   }
 
-  List<CanvasCircle> createCircles() {
-    if (circles == null) {
-      circles = new List<CanvasCircle>();
-    }
 
-    var count = getRandom(minCirclesCount, maxCirclesCount);
+  List<CanvasCircle> _createCircles() {
+    var _circles = new List<CanvasCircle>();
+
+    var count = _getRandom(minCirclesCount, maxCirclesCount);
     for(var i=0; i<count; i++) {
       var position = new Position(i*20, i*40);
-      var color = getRandomColor(0, 255);
+      var color = _getRandomColor(0, 255);
       var circle = new CanvasCircle(position, color);
-      circles.add(circle);
+      _circles.add(circle);
     }
 
-    print(circles.length);
+    return _circles;
   }
 
-  int getRandom(int min, int max) {
+
+  void _renderCircles(List<CanvasCircle> circles) {
+    circles.forEach(f(circle) => print(circle.color));
+  }
+
+
+  int _getRandom(int min, int max) {
     var randVal = min + (Math.random()*(max - min));
     var result = Math.parseDouble(randVal.toString()); //Because there is no floor() or round() method in Math
     return result;
   }
 
-  int getRandomColor(int min, int max) {
-    var r = getRandom(min, max);
-    var g = getRandom(min, max);
-    var b = getRandom(min, max);
+  int _getRandomColor(int min, int max) {
+    var r = _getRandom(min, max);
+    var g = _getRandom(min, max);
+    var b = _getRandom(min, max);
     var color = new RgbColor(r, g, b);
     return color;
   }
