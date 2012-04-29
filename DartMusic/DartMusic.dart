@@ -6,6 +6,7 @@
 #source('RandomAudioData.dart');
 #source('MP3AudioData.dart');
 #source('CanvasRenderer.dart');
+#source('CanvasCircleRenderer.dart');
 #source('BgColorAnimator.dart');
 #source('RgbColor.dart');
 #source('DragDropHandler.dart');
@@ -62,6 +63,7 @@ void main() {
 
   DartMusic m = new DartMusic();
   m.addEffect(new CanvasRenderer(document.query('#drawHere'), document.query("#playMe")));
+  m.addEffect(new CanvasCircleRenderer(document.query('#drawCirclesHere')));
   m.setAudioSource(new MP3AudioData(document.query("#playMe")));
   m.run();
   dragDrop.register();
