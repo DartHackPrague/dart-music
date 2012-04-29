@@ -74,6 +74,4 @@ void main() {
 
   m.run();
 
-  dragDrop.register();
-
 }
