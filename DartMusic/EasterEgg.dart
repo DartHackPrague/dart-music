@@ -8,14 +8,28 @@ class EasterEgg {
   int maxX = 0;
   int minY = 0;
   int maxY = 0;
+  int width = 190;
+  int height = 190;
 
   int minSpeed = 2; //px
   int maxSpeed = 10;
+  int limit = 20;
+  int interval = 50;
+
+  bool goLeft = false;
+  bool goDown = true;
+  var animation = null;
 
   String pathToImage = "images/dart_logo.png";
 
 
   void Surprise() {
+    if (animation != null) {
+      animation = null;
+      _canvas.style.display = "none";
+      return;
+    }
+
     if (_canvas == null) {
       _canvas = document.query("#easterEgg");
       _ctx = this._canvas.getContext("2d");
@@ -24,13 +38,16 @@ class EasterEgg {
       _canvas.style.top = top.toString() + 'px';
       _canvas.style.left = left.toString() + 'px';
 
-      maxX = window.innerWidth;
-      maxY = window.innerHeight;
+      maxX = window.innerWidth - width;
+      maxY = window.innerHeight - height;
     }
+
+    _canvas.style.display = "block";
 
     _LoadImage();
 
-    _DoCrazyMovements();
+    animation = window.setInterval(_DoCrazyMovements,interval);
+
   }
 
   void _LoadImage() {
@@ -48,8 +65,22 @@ class EasterEgg {
     var currentX = DartMath.parseInt( _canvas.style.left );
     var currentY = DartMath.parseInt( _canvas.style.top );
 
-    _canvas.style.top = (currentX + minSpeed).toString() + 'px';
-    _canvas.style.left = (currentX + minSpeed).toString() + 'px';
+    if (currentX > maxX) {
+      goLeft = true;
+    }
+    else {
+      goLeft = false;
+    }
+
+    if (currentY >= maxY) {
+      goDown = false;
+    }
+    else {
+      goDown = true;
+    }
+
+    _canvas.style.top = (goLeft ? currentX - minSpeed : currentX + minSpeed).toString() + 'px';
+    _canvas.style.left = (goDown ? currentY + minSpeed : currentY - minSpeed).toString() + 'px';
   }
 
 }
