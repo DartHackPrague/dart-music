@@ -22,17 +22,19 @@ class CanvasRenderer implements IRenderer {
 
     this._canvas.on.mouseMove.add((MouseEvent e) {
       // mouse cursor is under the 1/3 of the page
-      if (e.pageY > this._canvas.height * 0.3) {
+      if (e.pageY > this._canvas.height * 0.25) {
         if (this._dragDropActive) {
           this._drawDragDropSelectionEnd = e.pageX;
         } else {
           this._canvasMouseXPos = e.pageX;
         }
+      } else {
+        this._canvasMouseXPos = -1;
       }
     });
     
     this._canvas.on.mouseDown.add((MouseEvent e) {
-      if (e.pageY > this._canvas.height * 0.3) {
+      if (e.pageY > this._canvas.height * 0.25) {
         this._dragDropActive = true;
         this._drawDragDropSelectionEndOld = this._drawDragDropSelectionEnd;
         this._drawDragDropSelectionBeginOld = this._drawDragDropSelectionBegin;
@@ -84,7 +86,7 @@ class CanvasRenderer implements IRenderer {
     }*/
     
     int leftPos = 0;
-    // step size for x axus
+    // step size for x axis
     double step = this._canvas.width / data.length;
     // width of every single line in frequency analyzer
     int lineWidth = step.ceil().toInt();
@@ -92,13 +94,13 @@ class CanvasRenderer implements IRenderer {
     int basePosition = this._canvas.height - this._bottomOffset;
 
     /**
-     * "mirror like" reflection
+     * splitting line
      */
     this._ctx.beginPath();
     this._ctx.strokeStyle = "rgba(150,150,150,0.2)";
     this._ctx.lineWidth = 1;
-    this._ctx.moveTo(0, basePosition);
-    this._ctx.lineTo(this._canvas.width, basePosition);
+    this._ctx.moveTo(0, basePosition + 0.5);
+    this._ctx.lineTo(this._canvas.width, basePosition + 0.5);
     this._ctx.closePath();
     this._ctx.stroke();
 
@@ -109,9 +111,9 @@ class CanvasRenderer implements IRenderer {
                                         0, this._canvas.height - this._bottomOffset + maxLineHeight / 2);
     cg.addColorStop(0, "#000");
     cg.addColorStop(0.5, "#000");
-    cg.addColorStop(0.5, "rgba(50,50,50,0.9)");
-    cg.addColorStop(0.65, "rgba(50,50,50,0.7)");
-    cg.addColorStop(1, "rgba(50,50,50,0.3)");
+    cg.addColorStop(0.5, "rgba(0,0,0,0.8)");
+    //cg.addColorStop(0.65, "rgba(0,0,0,0.8)");
+    cg.addColorStop(1, "rgba(0,0,0,0.3)");
 
     this._ctx.beginPath();
     this._ctx.strokeStyle = cg;
@@ -142,7 +144,7 @@ class CanvasRenderer implements IRenderer {
     if (this._audio.readyState == MediaElement.HAVE_ENOUGH_DATA) {
       this._ctx.beginPath();
       leftPos = ((this._audio.currentTime / this._audio.duration) * this._canvas.width).round().toInt();
-      int height = data[((this._audio.currentTime / this._audio.duration) * data.length).round().toInt()] * 1.2;
+      int height = data[((this._audio.currentTime / this._audio.duration) * data.length).round().toInt()] * 1.4;
       if (height < 100) {
         height = 100;
       }
@@ -200,7 +202,7 @@ class CanvasRenderer implements IRenderer {
     /**
      * draw drag & drop guide line
      */ 
-    if (!this._dragDropActive) {
+    if (!this._dragDropActive && this._canvasMouseXPos != -1) {
       this._ctx.beginPath();
       this._ctx.lineWidth = 6;
       this._ctx.strokeStyle = cg;

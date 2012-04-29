@@ -68,12 +68,9 @@ void main() {
   m.addEffect(new CanvasCircleRenderer(document.query('#drawCirclesHere')));
   m.addEffect(new CanvasRenderer(document.query('#drawHere'), document.query("#playMe")));
   m.setAudioSource(new MP3AudioData(document.query("#playMe")));
-  
-  DragDropHandler dragDrop = new DragDropHandler();
-  dragDrop.register(m);
-
   m.run();
 
-  dragDrop.register();
+  DragDropHandler dragDrop = new DragDropHandler();
+  dragDrop.register(m);
 
 }
