@@ -46,6 +46,6 @@ canvas#drawHere {
 
 @-webkit-keyframes pulse {
     from { box-shadow:0 0 1px #A2D5DF; }
-    10%  { box-shadow:0 0 35px #0A70FF; }
+    15%  { box-shadow:0 0 35px #0A70FF; }
     to   { box-shadow:0 0 1px #A2D5DF; }
 }
