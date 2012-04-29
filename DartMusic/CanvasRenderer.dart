@@ -81,8 +81,15 @@ class CanvasRenderer implements IRenderer {
     cg.addColorStop(1, "rgba(210,210,210,0.05)");
     this._ctx.strokeStyle = cg;
     this._ctx.lineWidth = 2;
+    // line
     this._ctx.moveTo(leftPos, basePosition + height / 2);
     this._ctx.lineTo(leftPos, basePosition - height / 2);
+    // little arrows
+    this._ctx.moveTo(leftPos - 3, basePosition + height / 2);
+    this._ctx.lineTo(leftPos + 3, basePosition + height / 2);
+    this._ctx.moveTo(leftPos - 3, basePosition - height / 2);
+    this._ctx.lineTo(leftPos + 3, basePosition - height / 2);
+
     this._ctx.closePath();
     this._ctx.stroke();
     
