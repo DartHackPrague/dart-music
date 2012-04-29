@@ -14,7 +14,7 @@ class CanvasCircleRenderer implements IRenderer {
   static final volumeOptimum = 127;
 
   int counter = 0;
-  int limitToRender = 20;
+  int limitToRender = 3; //smaller number means MORE OFTEN
 
   CanvasCircleRenderer(CanvasElement elm) {
     _canvas = elm;
@@ -65,18 +65,18 @@ class CanvasCircleRenderer implements IRenderer {
   }
 
   void _renderCircles(List data) {
-    if (data != null) {
-      var factor = resizeFactor(DartMath.Average(data));
-
+    if (data != null && data.length > 0) {
+      var factor = getResizeFactor(data);
       this.circles.forEach(f(circle) => _manageCircle(circle, factor));
     }
     else {
-      this.circles.forEach(f(circle) => _manageCircle(circle, 1));
+      double fixedFactor = 1/1;
+      this.circles.forEach(f(circle) => _manageCircle(circle, fixedFactor));
     }
 
   }
 
-  double resizeFactor(data) {
+  double getResizeFactor(data) {
     var avg = DartMath.Average(data);
     var factor = avg / volumeOptimum;
     return factor;

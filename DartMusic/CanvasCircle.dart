@@ -27,11 +27,11 @@ class CanvasCircle {
   }
 
   void resize(double factor) {
-    if (factor == 1) {
+    if (factor == 1 || factor == null) {
       this.size = this.oldSize;
     }
     else {
-      this.size = this.size * factor;
+      this.size = this.oldSize * factor;
     }
   }
 
