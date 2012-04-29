@@ -37,6 +37,14 @@ class CanvasRenderer implements IRenderer {
     
     //this._ctx.strokeStyle = '#eee';
     
+    this._ctx.beginPath();
+    this._ctx.strokeStyle = "rgba(255,255,255,0.2)";
+    this._ctx.lineWidth = 1;
+    this._ctx.moveTo(0, this._canvas.height - this._bottomOffset);
+    this._ctx.lineTo(this._canvas.width, this._canvas.height - this._bottomOffset);
+    this._ctx.closePath();
+    this._ctx.stroke();
+    
     /**
      * "mirror like" reflection
      */
