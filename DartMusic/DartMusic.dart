@@ -94,7 +94,7 @@ void main() {
   
   
   DartMusic m = new DartMusic();
-  m.addEffect(new CanvasRenderer(document.query('#drawHere')));
+  m.addEffect(new CanvasRenderer(document.query('#drawHere'), document.query("#playMe")));
   m.setAudioSource(new MP3AudioData(document.query("#playMe")));
   m.run();
   dragDrop.register();

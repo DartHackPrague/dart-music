@@ -5,21 +5,20 @@ class CanvasRenderer implements IRenderer {
   
   CanvasElement _canvas;
   CanvasRenderingContext2D _ctx;
+  AudioElement _audio;
   int _bottomOffset;
   
-  CanvasRenderer(CanvasElement elm) {
+  CanvasRenderer(CanvasElement elm, AudioElement audio) {
     this._canvas = elm;
+    this._audio = audio;
     this._ctx = this._canvas.getContext("2d");
     this.resize();
   }
   
   void render(List data) {
-    //print('Canvas render');
-    //print(data.length);
-    
-    //this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    //this.ctx.fillStyle = '#eee';
-    //this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    //print(this._audio.currentTime);    
+    //print(this._audio.duration);    
+
     this._canvas.width = this._canvas.width;
     
     int maxLineHeight = (0.3 * this._canvas.height).toInt();
@@ -30,6 +29,7 @@ class CanvasRenderer implements IRenderer {
     
     //this._ctx.strokeStyle = '#eee';
     
+    // reflection
     CanvasGradient cg = this._ctx.createLinearGradient(0, this._canvas.height - this._bottomOffset - maxLineHeight / 2,
                                                        0, this._canvas.height - this._bottomOffset + maxLineHeight / 2);
     cg.addColorStop(0, "#eee");
@@ -37,6 +37,7 @@ class CanvasRenderer implements IRenderer {
     cg.addColorStop(0.5, "rgba(238,238,238,0.9)");
     cg.addColorStop(0.65, "rgba(238,238,238,0.5)");
     cg.addColorStop(1, "rgba(238,238,238,0.05)");
+    this._ctx.beginPath();
     this._ctx.strokeStyle = cg;
     this._ctx.lineWidth = lineWidth;
 
@@ -48,7 +49,30 @@ class CanvasRenderer implements IRenderer {
       
       leftPos += step;
     }
+    this._ctx.closePath();
     this._ctx.stroke();
+    
+    this._ctx.beginPath();
+    // draw "progress bar"
+    leftPos = ((this._audio.currentTime / this._audio.duration) * this._canvas.width).round().toInt();
+    int height = data[((this._audio.currentTime / this._audio.duration) * data.length).round().toInt()];
+    if (height < 30) {
+      height = 30;
+    }
+    cg = this._ctx.createLinearGradient(0, this._canvas.height - this._bottomOffset - maxLineHeight / 2,
+                                                       0, this._canvas.height - this._bottomOffset + maxLineHeight / 2);
+    cg.addColorStop(0, "#bbb");
+    cg.addColorStop(0.5, "#bbb");
+    cg.addColorStop(0.5, "rgba(190,190,190,0.6)");
+    cg.addColorStop(0.65, "rgba(190,190,190,0.3)");
+    cg.addColorStop(1, "rgba(190,190,190,0.05)");
+    this._ctx.strokeStyle = cg;
+    this._ctx.lineWidth = 2;
+    this._ctx.moveTo(leftPos, this._canvas.height - this._bottomOffset + height / 2);
+    this._ctx.lineTo(leftPos, this._canvas.height - this._bottomOffset - height / 2);
+    this._ctx.closePath();
+    this._ctx.stroke();
+    print(height);
   }
   
   void resize() {
