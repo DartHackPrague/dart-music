@@ -8,6 +8,7 @@ class CanvasCircleRenderer implements IRenderer {
 
   int minCirclesCount = 1;
   int maxCirclesCount = 5;
+  static final PI2 = Math.PI * 2;
 
   CanvasCircleRenderer(CanvasElement elm) {
     _canvas = elm;
@@ -19,7 +20,6 @@ class CanvasCircleRenderer implements IRenderer {
   }
 
   void render(List data) {
-    print('rendered ');
     _renderCircles(this.circles);
   }
 
@@ -46,9 +46,25 @@ class CanvasCircleRenderer implements IRenderer {
 
 
   void _renderCircles(List<CanvasCircle> circles) {
-    circles.forEach(f(circle) => print(circle.color));
+    circles.forEach(f(circle) => _manageCircle(circle));
   }
 
+  //Kill circle if it should be dead
+  //renders on position
+  void _manageCircle(CanvasCircle circle) {
+    _renderCircle(circle, _ctx);
+  }
+
+  void _renderCircle(CanvasCircle circle, CanvasRenderingContext2D ctx) {
+    ctx.beginPath();
+    ctx.setLineWidth(2);
+    ctx.setFillColor(circle.color.toString());
+    ctx.setStrokeColor(circle.color.toString());
+    ctx.arc(circle.position.x, circle.position.y, circle.size, 0, PI2, false);
+    ctx.fill();
+    ctx.closePath();
+    ctx.stroke();
+  }
 
   int _getRandom(int min, int max) {
     var randVal = min + (Math.random()*(max - min));
