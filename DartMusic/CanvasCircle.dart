@@ -10,4 +10,9 @@ class CanvasCircle {
     this.opacity = 1;
     this.size = 20;
   }
+
+  void move() {
+    //var newPosition = new Position();
+  }
+
 }

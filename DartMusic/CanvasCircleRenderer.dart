@@ -20,6 +20,9 @@ class CanvasCircleRenderer implements IRenderer {
   }
 
   void render(List data, int time) {
+    // clear canvas
+    this._canvas.width = this._canvas.width;
+
     _renderCircles(this.circles);
   }
 
@@ -35,7 +38,7 @@ class CanvasCircleRenderer implements IRenderer {
 
     var count = _getRandom(minCirclesCount, maxCirclesCount);
     for(var i=0; i<count; i++) {
-      var position = new Position(i*20, i*40);
+      var position = Position.RandomPosition(0, this._canvas.width, 0, this._canvas.height);
       var color = _getRandomColor(0, 255);
       var circle = new CanvasCircle(position, color);
       _circles.add(circle);
@@ -52,7 +55,13 @@ class CanvasCircleRenderer implements IRenderer {
   //Kill circle if it should be dead
   //renders on position
   void _manageCircle(CanvasCircle circle) {
-    _renderCircle(circle, _ctx);
+    if (circle.opacity > 0) {
+      _renderCircle(circle, _ctx);
+      circle.move();
+    }
+    else {
+      _killCircle(circle, _ctx);
+    }
   }
 
   void _renderCircle(CanvasCircle circle, CanvasRenderingContext2D ctx) {
@@ -64,6 +73,10 @@ class CanvasCircleRenderer implements IRenderer {
     ctx.fill();
     ctx.closePath();
     ctx.stroke();
+  }
+
+  void _killCircle(CanvasCircle circle, CanvasRenderingContext2D ctx) {
+    print('This circle should be killed now');
   }
 
   int _getRandom(int min, int max) {
