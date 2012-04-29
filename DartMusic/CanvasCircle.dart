@@ -3,6 +3,7 @@ class CanvasCircle {
   var color;
   var opacity;
   var size;
+  var oldSize;
   var minX = 0;
   var minY = 100;
   var maxX;
@@ -15,6 +16,7 @@ class CanvasCircle {
     this.color = color;
     this.opacity = 1;
     this.size = DartMath.Random(minSize, maxSize);
+    this.oldSize = this.size;
     this.maxX = maxX;
     this.maxY = maxY;
   }
@@ -24,8 +26,13 @@ class CanvasCircle {
     this.position = newPosition;
   }
 
-  void resize(int factor) {
-    this.size = factor; //TODO
+  void resize(double factor) {
+    if (factor == 1 || factor == null) {
+      this.size = this.oldSize;
+    }
+    else {
+      this.size = this.oldSize * factor;
+    }
   }
 
 }

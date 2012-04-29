@@ -17,4 +17,11 @@ class RandomAudioData implements IAudioData {
     return null;
   }
   
+  void setMinFreq(int freq) {
+    
+  }
+  
+  void setMaxFreq(int freq) {
+    
+  }
 }
