@@ -14,7 +14,7 @@ class CanvasCircleRenderer implements IRenderer {
   static final volumeOptimum = 127;
 
   int counter = 0;
-  int limitToRender = 3; //smaller number means MORE OFTEN
+  int limitToRender = 1; //smaller number means MORE OFTEN
 
   CanvasCircleRenderer(CanvasElement elm) {
     _canvas = elm;

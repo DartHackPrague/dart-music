@@ -73,3 +73,31 @@ canvas#drawCirclesHere {
 		margin: 15px auto;
 	}
 }
+
+.buttons {
+	position: absolute;
+	top: 40px;
+	left: 90px;
+	z-index: 150;
+}
+
+.buttons a {
+	font-weight: bold;
+	display: inline-block;
+	border: 1px dotted #333;
+	padding: 4px 7px;
+	margin: 7px;
+	border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	color: #333;
+	background-color: #999;
+	text-decoration: none;
+	
+	-webkit-transition: opacity 0.5s linear;
+}
+
+.buttons a:hover {
+	color: #999;
+	background-color: #333;
+}
