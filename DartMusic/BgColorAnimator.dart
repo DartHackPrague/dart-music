@@ -5,12 +5,12 @@ class BgColorAnimator {
   Element element;
   RgbColor color;
   int maxColorValue = 255;
-  int minColorValue = 0;
+  int minColorValue = 180;
   bool minReached = false;
   bool maxReached = false;
   bool incrementing = true; 
-  final int colorChangeStep = 10;
-  final int colorChangeDelay = 200;
+  final int colorChangeStep = 3;
+  final int colorChangeDelay = 100;
 
   BgColorAnimator(Element element) {
     this.element = element;
@@ -40,53 +40,21 @@ class BgColorAnimator {
       } else if(!isMaximal(currentColor.b)) {
         currentColor.b += colorChangeStep;
       } else {
-        print("reached max");
+//        print("reached max");
         incrementing = false;
       }
     } else {
       if(!isMinimal(currentColor.r)) {
-        currentColor.r += colorChangeStep;
+        currentColor.r -= colorChangeStep;
       } else if(!isMinimal(currentColor.g)) {
-        currentColor.g += colorChangeStep;
+        currentColor.g -= colorChangeStep;
       } else if(!isMinimal(currentColor.b)) {
-        currentColor.b += colorChangeStep;
+        currentColor.b -= colorChangeStep;
       } else {
-        print("reached min");
+//        print("reached min");
         incrementing = true;
       }
     }
-//    
-//    if (maxReached == false && (currentColor.r <= maxColorValue || currentColor.g <= maxColorValue || currentColor.b <= maxColorValue)) {
-//      if (currentColor.r < maxColorValue) {
-//        currentColor.r++;
-//      }
-//      else if (currentColor.g < maxColorValue - colorChangeStep) {
-//        currentColor.g++;
-//      }
-//      else if (currentColor.b < maxColorValue - color) {
-//        currentColor.b++;
-//      }
-//      else {
-//        maxReached = true;
-//        minReached = false;
-//      }
-//    }
-//    else if (maxReached == true) {
-//      if (currentColor.r > minColorValue && currentColor.r <= maxColorValue) {
-//        currentColor.r--;
-//      }
-//      else if (currentColor.g > minColorValue && currentColor.g <= maxColorValue) {
-//        currentColor.g--;
-//      }
-//      else if (currentColor.b > minColorValue && currentColor.b <= maxColorValue) {
-//        currentColor.b--;
-//      }
-//      else {
-//        maxReached = false;
-//        minReached = true;
-//      }
-//    }
-//
     return currentColor;
   }
   
