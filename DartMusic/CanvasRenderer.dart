@@ -11,7 +11,7 @@ class CanvasRenderer implements IRenderer {
   
   CanvasRenderer(CanvasElement elm, AudioElement audio) {
     this._canvas = elm;
-    this._audio = audio;
+    this._audio = audio; // only to draw progress bar
     this._ctx = this._canvas.getContext("2d");
     this.resize();
     
@@ -26,22 +26,31 @@ class CanvasRenderer implements IRenderer {
   }
   
   void render(List data) {
+    // clear canvas
     this._canvas.width = this._canvas.width;
     
+    // maximum height that any line in the analyzer can have 
     int maxLineHeight = (0.3 * this._canvas.height).toInt();
-    //int leftPos = ((window.innerWidth - data.length) / 2).toInt();
+    if (maxLineHeight * 2 > this._canvas.height * 0.8) {
+      maxLineHeight = (this._canvas.height / 3).toInt();
+    }
+    print(maxLineHeight);
     int leftPos = 0;
+    // step size for x axus
     double step = this._canvas.width / data.length;
+    // width of every single line in frequency analyzer
     int lineWidth = step.ceil().toInt();
+    // start y position (middle of the frequency analyzer)
     int basePosition = this._canvas.height - this._bottomOffset;
     
-    //this._ctx.strokeStyle = '#eee';
-    
+    /**
+     * "mirror like" reflection
+     */
     this._ctx.beginPath();
     this._ctx.strokeStyle = "rgba(255,255,255,0.2)";
     this._ctx.lineWidth = 1;
-    this._ctx.moveTo(0, this._canvas.height - this._bottomOffset);
-    this._ctx.lineTo(this._canvas.width, this._canvas.height - this._bottomOffset);
+    this._ctx.moveTo(0, basePosition);
+    this._ctx.lineTo(this._canvas.width, basePosition);
     this._ctx.closePath();
     this._ctx.stroke();
     
@@ -59,6 +68,7 @@ class CanvasRenderer implements IRenderer {
     this._ctx.strokeStyle = cg;
     this._ctx.lineWidth = lineWidth;
 
+    // power of 2 - just to make bigger differences between low and high values (looks better)
     int max = (this._canvas.height * this._canvas.height / 12).toInt();
     for (int i=0; i < data.length; i++) {
       int height = (data[i] * data[i]) / max * maxLineHeight;
