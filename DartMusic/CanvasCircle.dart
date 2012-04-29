@@ -4,7 +4,7 @@ class CanvasCircle {
   var size;
   var oldSize;
   var minX = 0;
-  var minY = 100;
+  var minY = 0;
   var maxX; //size of canvas
   var maxY;  //size of canvas
   int minSize = 25;
