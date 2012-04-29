@@ -22,14 +22,14 @@ div#dndArea {
 	 border-radius: 5px;
 	 -webkit-border-radius: 5px;
 	 -moz-border-radius: 5px;
-	 opacity: 0.7;
+	 opacity: 0.9;
 	 z-index: 100;
 	 position: relative;
 	 -webkit-transition: opacity 0.5s linear;
-	 color: orange;
+	 color: #ddd;
 	 font-weight: bold;	 
-     text-shadow: 1px 1px 1px #0740eb;
-     filter: dropshadow(color=#0740eb, offx=1, offy=1);
+     text-shadow: 0px 0px 8px #ddd;
+     filter: dropshadow(color=#ddd, offx=0, offy=0);
 }
 
 div#dndArea p {
@@ -66,17 +66,6 @@ canvas#drawCirclesHere {
 }
 
 
-@media only screen and (min-height: 450px) {
-	div#dndArea p {
-		font-size: 26px;
-		margin-bottom: 22px;
-		margin-top: 22px;
-	}
-	
-	div#dndArea {
-		margin: 15px auto;
-	}
-}
 
 .buttons {
 	position: absolute;
@@ -104,4 +93,18 @@ canvas#drawCirclesHere {
 .buttons a:hover {
 	color: #999;
 	background-color: #333;
+}
+
+
+
+@media only screen and (min-height: 450px) {
+	div#dndArea p {
+		font-size: 26px;
+		margin-bottom: 22px;
+		margin-top: 22px;
+	}
+	
+	div#dndArea {
+		margin: 15px auto;
+	}
 }

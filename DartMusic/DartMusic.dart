@@ -54,7 +54,7 @@ class DartMusic {
   void setAudioSource(IAudioData audio) {
     this._audioData = audio;
     for (final effect in this._effects) {
-      effect.setAudioElement(audio.getElement());
+      effect.setAudioElement(audio);
     }
   }
 

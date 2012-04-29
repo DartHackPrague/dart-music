@@ -6,6 +6,7 @@ class CanvasRenderer implements IRenderer {
   CanvasElement _canvas;
   CanvasRenderingContext2D _ctx;
   AudioElement _audio;
+  IAudioData _audioSource;
   
   int _bottomOffset;
   bool _dragDropActive = false;
@@ -146,8 +147,13 @@ class CanvasRenderer implements IRenderer {
     // draw slider only if audio is preloaded enought
     if (this._audio.readyState == MediaElement.HAVE_ENOUGH_DATA && !this._audio.ended && this._audio.duration > 0) {
       this._ctx.beginPath();
-      leftPos = ((this._audio.currentTime / this._audio.duration) * this._canvas.width).toInt();
-      int height = (data[((this._audio.currentTime / this._audio.duration) * data.length).toInt()] / 255) * maxLineHeight * 1.1;
+      leftPos = ((this._audio.currentTime / this._audio.duration) * this._canvas.width).floor().toInt();
+      int index = ((this._audio.currentTime / this._audio.duration) * (data.length - 1)).floor().toInt();
+      /*if (index > 1023) {
+        print(index);
+        index = 1023;
+      }*/
+      int height = (data[index] / 255) * maxLineHeight * 1.1;
       if (height < 100) {
         height = 100;
       }
@@ -183,11 +189,11 @@ class CanvasRenderer implements IRenderer {
             
       String textTotal = DartMath.getNiceTime(this._audio.duration);
       this._ctx.fillText(textTotal, this._canvas.width - 32, basePosition - 8);
-      this._ctx.fill();
+      //this._ctx.fill();
       
       String textProgress = DartMath.getNiceTime(this._audio.currentTime);
       this._ctx.fillText(textProgress, leftPos - 33, basePosition + 15);
-      this._ctx.fill();
+      //this._ctx.fill();
       
       //this._ctx.strokeText(text, leftPos + 4, basePosition - 5);
 
@@ -239,6 +245,15 @@ class CanvasRenderer implements IRenderer {
       this._ctx.stroke();
     }
     
+    /**
+     * render song title
+     */
+    if (!this._audioSource.getTitle().isEmpty()) {
+      TextMetrics metrics = this._ctx.measureText(this._audioSource.getTitle());
+      this._ctx.fillStyle = "#888";
+      this._ctx.fillText(this._audioSource.getTitle(), this._canvas.width - metrics.width - 10, this._canvas.height - 10);
+    }
+    
     //this._ctx.restore();
     //this._ctx.save();
   }
@@ -249,8 +264,9 @@ class CanvasRenderer implements IRenderer {
     this._bottomOffset = (this._canvas.height / 2.5).toInt();
   }
   
-  void setAudioElement(AudioElement audio) {
-    this._audio = audio;
+  void setAudioElement(IAudioData audio) {
+    this._audioSource = audio;
+    this._audio = audio.getElement();
   }
   
   List getSelection() {
