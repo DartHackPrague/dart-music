@@ -10,11 +10,11 @@ class MP3AudioData implements IAudioData {
   int freqMaxTotal = 20000;
   dom.AudioContext audioContext;
   var source;
-  var title;
+  String _title;
   
   MP3AudioData(AudioElement audio) {
     this._elm = audio;
-    title = "";
+    _title = "";
     audioContext = new dom.AudioContext();
     source = audioContext.createMediaElementSource(audio);
     dom.AudioGainNode volumeNode = audioContext.createGainNode();
@@ -59,5 +59,13 @@ class MP3AudioData implements IAudioData {
   void setMinFreqRatio(double freq) {
     _freqMin = (freq*freqMaxTotal).toInt();
     _highpassFilter.frequency.value = _freqMin;
+  }
+  
+  String getTitle() {
+    return _title;
+  }
+  
+  void setTitle(String title) {
+    _title = title;
   }
 }
