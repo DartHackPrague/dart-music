@@ -15,15 +15,18 @@
 #source('CanvasCircleRenderer.dart');
 #source('CanvasCircle.dart');
 #source('Position.dart');
+#source('EasterEgg.dart');
 
 
 class DartMusic {
 
   IAudioData _audioData;
   List _effects;
+  EasterEgg _egg;
 
   DartMusic() {
     this._effects = new List();
+    this._egg = new EasterEgg();
 
     window.on.resize.add((Event e) {
       for (final effect in this._effects) {
@@ -54,7 +57,7 @@ class DartMusic {
       effect.setAudioElement(audio.getElement());
     }
   }
-  
+
   IAudioData getAudioData() {
     return _audioData;
   }
@@ -62,6 +65,7 @@ class DartMusic {
   void setButtonsListener() {
     var playButton = document.query("#playButton");
     var pauseButton = document.query("#pauseButton");
+    var eggButton = document.query("#eggButton");
 
     playButton.on.click.add((Event event) {
       _audioData.getElement().play();
@@ -69,6 +73,10 @@ class DartMusic {
 
     pauseButton.on.click.add((Event event) {
       _audioData.getElement().pause();
+    });
+
+    eggButton.on.click.add((Event event) {
+      _egg.Surprise();
     });
   }
 }

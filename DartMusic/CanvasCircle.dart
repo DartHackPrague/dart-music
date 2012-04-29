@@ -12,7 +12,7 @@ class CanvasCircle {
 
   int stepUp = 2;
   int stepAside = 3;
-  double opacity = 0.6;
+  double opacity = 0.7;
 
 
   CanvasCircle(Position position, RgbColor color, int maxX, int maxY) {
