@@ -58,6 +58,16 @@ class DartMusic {
     }
   }
 
+  void _showAboutDialog() {
+    Element dialog = document.query("#aboutDialog");
+    dialog.style.display = "block";
+  }
+
+  void _hideAboutDialog() {
+    Element dialog = document.query("#aboutDialog");
+    dialog.style.display = "none";
+  }
+
   IAudioData getAudioData() {
     return _audioData;
   }
@@ -66,6 +76,8 @@ class DartMusic {
     var playButton = document.query("#playButton");
     var pauseButton = document.query("#pauseButton");
     var eggButton = document.query("#eggButton");
+    var aboutButton = document.query("#aboutButton");
+    var closeAboutButton = document.query("#closeAboutButton");
 
     playButton.on.click.add((Event event) {
       _audioData.getElement().play();
@@ -77,6 +89,14 @@ class DartMusic {
 
     eggButton.on.click.add((Event event) {
       _egg.Surprise();
+    });
+
+    aboutButton.on.click.add((Event event) {
+      _showAboutDialog();
+    });
+
+    closeAboutButton.on.click.add((Event event) {
+      _hideAboutDialog();
     });
   }
 }
