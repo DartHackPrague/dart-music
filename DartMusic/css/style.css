@@ -59,6 +59,9 @@ canvas#drawCirclesHere {
 
 .buttons a {
     font-size: 12px;
+    min-width: 45px;
+    display: inline-block;
+    text-align: center;
     color: #555;
     text-transform: uppercase;
     text-decoration: none;
@@ -77,28 +80,6 @@ canvas#drawCirclesHere {
 .buttons a:hover {
     background: -moz-linear-gradient(top, #eee 0%, #ddd);
     background: -webkit-gradient(linear, left top, left bottom, from(#eee), to(#ddd));
-}
-
-@media only screen and (min-height: 450px) {
-	div#dndArea p {
-		font-size: 26px;
-		margin-bottom: 22px;
-		margin-top: 22px;
-	}
-	
-	div#dndArea {
-		margin: 15px auto;
-	}
-	
-	.buttons a {
-		font-size: 14px;
-		padding: 8px 20px;
-	}
-	
-	.buttons {
-		top: 30px;
-		left: 30px;
-	}
 }
 
 
@@ -131,3 +112,27 @@ canvas#drawCirclesHere {
 	text-transform: uppercase;
 	border-bottom: 2px solid #333;
 }
+
+
+@media only screen and (min-height: 450px) {
+	div#dndArea p {
+		font-size: 26px;
+		margin-bottom: 22px;
+		margin-top: 22px;
+	}
+	
+	div#dndArea {
+		margin: 15px auto;
+	}
+	
+	.buttons a {
+		font-size: 14px;
+		padding: 8px 20px;
+	}
+	
+	.buttons {
+		top: 30px;
+		left: 30px;
+	}
+}
+

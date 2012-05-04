@@ -34,7 +34,8 @@ class DragDropHandler {
     AudioElement audioOld = document.query("audio");
     
     AudioElement audio = new AudioElement();
-    audio.src = e.target.result;
+    audio.src = e.target.dynamic.result;
+    //audio.src = e.target.result;
     audio.controls = false;
     audio.autoplay = true;
     audio.loop = true;

@@ -1,67 +1,66 @@
 <!DOCTYPE html>
 
 <html>
-  <head>
-    <title>DartMusic</title>
+<head>
+    <title>DartMusic - Dart Hackathon Project - Prague - April 2012</title>
     <link href="css/style.css" rel="stylesheet" media="screen"/>
-  </head>
-  <body>
-  
-  	<div id="main">
-  			<span class="buttons">
-	  			<a href="#" id="playButton">Play</a>
-	  			<a href="#" id="pauseButton">Pause</a>
-	  			<a href="#" id="eggButton">Easter Egg</a>
-	  			<a href="#" id="aboutButton">About</a>
-	  		</span>
-  	
-  	
-	  	<div id="dndArea">
-	  		<p>Drop your mp3 file here!<br>You will see some dart magic</p>	  		
-	  	</div>
-  	
-  		<div id="aboutDialog">
-  			<h4>Description</h4>
-  			You can Drag and Drop your own mp3 file to play it instead of sample track. 
-  			<br/>
-  			<br/>
-			By selecting a part of frequency chart, you can filter different frequencies in real time (only selected frequencies will be played).
-			Hit spacebar for reseting frequency filter. 
-			<br/>
-			<br/>
-			
-			Canvas tag is used for animations and HTML5 audio API for reading live audio from played track.<br/>
-			Developed and tested in Chrome 18.0.1025.165.
-			<br/>
-			<br/>
-  		
-  			This application was created during 2 (3) days Dart Hackathon 2012 in Prague by<br/>
-  			<a href="http://davidjs.com">David Votrubec<a/>, <br/>
-  			<a href="https://github.com/martinsik">Martin Sikora</a><br/>
-  			and <span title="I dont know Tibors profile">Tibor Szolár</span>
-  			
-  			<br/>
-  			<span class="buttons">
-	  			<a href="#" id="closeAboutButton">Close</a>
-	  		</span>
-  		</div>
-  	
-	    
-	
-		<div class="controls">
-		    <audio src="music/test.mp3" id="playMe" autoplay loop>
-		  		Your browser does not support the audio element.
-		    </audio>
-	    </div>
-	    
-	    <canvas id="drawHere"></canvas>
-	    <canvas id="drawCirclesHere"></canvas>
-	    <canvas id="easterEgg" width="150" height="150"></canvas>
-	    
+</head>
+<body>
+
+    <div id="main">
+        <span class="buttons">
+            <a href="#" id="playPauseButton">Pause</a>
+            <a href="#" id="eggButton">Easter Egg</a>
+            <a href="#" id="aboutButton">About</a>
+        </span>
+
+
+        <div id="dndArea">
+            <p>Drop your mp3 file here!<br>You will see some dart magic</p>
+        </div>
+
+        <div id="aboutDialog">
+            <h4>Description</h4>
+            You can Drag and Drop your own mp3 file to play it instead of sample track.
+            <br>
+            <br>
+            By selecting a part of frequency chart, you can filter different frequencies in real time (only selected
+            frequencies will be played).
+            Hit spacebar for reseting frequency filter.
+            <br>
+            <br>
+
+            Canvas tag is used for animations and HTML5 audio API for reading live audio from played track.<br/>
+            Developed and tested in Chrome 18.0.1025.165.
+            <br>
+            <br>
+
+            This application was created during 2 (3) days Dart Hackathon 2012 in Prague by<br/>
+            <a href="http://davidjs.com">David Votrubec</a>, <br>
+            <a href="https://github.com/martinsik">Martin Sikora</a><br>
+            and <span title="I dont know Tibors profile">Tibor Szolár</span>
+
+            <br>
+            <span class="buttons">
+                <a href="#" id="closeAboutButton">Close</a>
+            </span>
+        </div>
+
+
+        <div class="controls">
+            <audio src="music/test.mp3" id="playMe" autoplay loop>
+                Your browser does not support the audio element.
+            </audio>
+        </div>
+
+        <canvas id="drawHere"></canvas>
+        <canvas id="drawCirclesHere"></canvas>
+        <canvas id="easterEgg" width="150" height="150"></canvas>
+
     </div>
-    
+
     <script type="application/dart" src="DartMusic.dart"></script>
     <script src="http://dart.googlecode.com/svn/branches/bleeding_edge/dart/client/dart.js"></script>
 
-  </body>
+</body>
 </html>

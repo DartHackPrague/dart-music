@@ -24,4 +24,6 @@ class RandomAudioData implements IAudioData {
   String getTitle() { return ""; }
   
   void setTitle(String title) { } 
+  
+  void updateSource(AudioElement audio) { }
 }

@@ -1,23 +1,23 @@
 
 class MP3AudioData implements IAudioData {
   
-  dom.RealtimeAnalyserNode _analyser;
+  RealtimeAnalyserNode _analyser;
   AudioElement _elm;
-  dom.BiquadFilterNode _highpassFilter;
-  dom.BiquadFilterNode _lowpassFilter;
+  BiquadFilterNode _highpassFilter;
+  BiquadFilterNode _lowpassFilter;
   int _freqMin = 0;
   int _freqMax = 20000;
   int freqMaxTotal = 20000;
-  dom.AudioContext audioContext;
+  AudioContext audioContext;
   var source;
   String _title;
   
   MP3AudioData(AudioElement audio) {
     this._elm = audio;
     _title = "";
-    audioContext = new dom.AudioContext();
+    audioContext = new AudioContext();
     source = audioContext.createMediaElementSource(audio);
-    dom.AudioGainNode volumeNode = audioContext.createGainNode();
+    AudioGainNode volumeNode = audioContext.createGainNode();
     this._analyser = audioContext.createAnalyser();
 
     _lowpassFilter = audioContext.createBiquadFilter();

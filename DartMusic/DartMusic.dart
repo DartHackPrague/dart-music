@@ -1,6 +1,5 @@
 #import('dart:html');
 #import('dart:core');
-#import('dart:dom', prefix:'dom');
 
 #source('IAudioData.dart');
 #source('IRenderer.dart');
@@ -73,18 +72,22 @@ class DartMusic {
   }
 
   void setButtonsListener() {
-    var playButton = document.query("#playButton");
-    var pauseButton = document.query("#pauseButton");
+    AudioElement elm = this._audioData.getElement();
+    ButtonElement playPauseButton = document.query("#playPauseButton");
+    
+    
     var eggButton = document.query("#eggButton");
     var aboutButton = document.query("#aboutButton");
     var closeAboutButton = document.query("#closeAboutButton");
 
-    playButton.on.click.add((Event event) {
-      _audioData.getElement().play();
-    });
-
-    pauseButton.on.click.add((Event event) {
-      _audioData.getElement().pause();
+    playPauseButton.on.click.add((Event event) {
+      if (elm.paused) {
+        playPauseButton.text = 'Pause';
+        this._audioData.getElement().play();
+      } else {
+        playPauseButton.text = 'Play';
+        this._audioData.getElement().pause();
+      }
     });
 
     eggButton.on.click.add((Event event) {
