@@ -90,9 +90,9 @@ class DartMusic {
       }
     });
 
-    eggButton.on.click.add((Event event) {
+    /*eggButton.on.click.add((Event event) {
       _egg.Surprise();
-    });
+    });*/
 
     aboutButton.on.click.add((Event event) {
       _showAboutDialog();
